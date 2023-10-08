@@ -27,6 +27,7 @@
         <p class="title-level1">
           <span>排行榜（2023年1月1日至今）</span>
         </p>
+        <rankingList />
       </div>
     </div>
     <div class="bottom">
@@ -45,6 +46,7 @@
 </template>
 <script>
 import complaintIndicators from "@/views/complaintIndicators/index.vue";
+import rankingList from "@/views/rankingList/index.vue";
 export default {
   data() {
     return {
@@ -56,6 +58,7 @@ export default {
   methods: {},
   components: {
     complaintIndicators,
+    rankingList,
   },
 };
 </script>
