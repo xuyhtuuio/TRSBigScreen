@@ -16,11 +16,13 @@
     <div class="content">
       <div class="content-left">
         <p class="title-level1">
-          <span>投诉指标（2023年1月1日至今）</span>
+          <span
+            >投诉指标<span class="time-dec">（2023年1月1日至今）</span></span
+          >
         </p>
+        <complaintIndicators />
       </div>
-      <div class="content-center">
-      </div>
+      <div class="content-center"></div>
       <div class="content-right">
         <p class="title-level1">
           <span>排行榜（2023年1月1日至今）</span>
@@ -42,20 +44,20 @@
   </div>
 </template>
 <script>
+import complaintIndicators from "@/views/complaintIndicators/index.vue";
 export default {
   data() {
     return {
       publicPath: process.env.BASE_URL,
-    }
+    };
   },
-  created() {
+  created() {},
+  watch: {},
+  methods: {},
+  components: {
+    complaintIndicators,
   },
-  watch: {
-
-  },
-  methods: {
-  },
-}
+};
 </script>
 <style lang="less" scoped>
 .home {
@@ -96,9 +98,11 @@ export default {
     margin: 8px 25px 25px;
     height: 662px;
     display: flex;
+    .content-left {
+      width: 362px;
+    }
   }
 
-  .content-left,
   .content-right {
     width: 362px;
     position: relative;
@@ -115,13 +119,13 @@ export default {
     position: relative;
     z-index: 10000;
     display: flex;
-    .bottom-item{
+    .bottom-item {
       flex: 1;
     }
-     .bottom-item:first-of-type{
+    .bottom-item:first-of-type {
       margin-right: 16px;
       flex: 1.26;
-     }
+    }
 
     .enp-insight {
       text-align: left;
@@ -149,7 +153,7 @@ export default {
     line-height: 30px;
     color: #ffffff;
 
-    span+span {
+    span + span {
       font-size: 36px;
       background: linear-gradient(180deg, #fff0df 0%, #ccd7ff 100%);
       -webkit-background-clip: text;
@@ -159,11 +163,13 @@ export default {
       transform: matrix(1, 0, -0.09, 1, 0, 0);
 
       &::before {
-        content: '|';
+        content: "|";
         padding: 0 16px;
-        background: linear-gradient(90deg,
-            rgba(58, 144, 206, 0.5) -0.21%,
-            rgba(58, 144, 206, 0) 107%);
+        background: linear-gradient(
+          90deg,
+          rgba(58, 144, 206, 0.5) -0.21%,
+          rgba(58, 144, 206, 0) 107%
+        );
         font-size: 24px;
       }
     }
@@ -204,25 +210,34 @@ export default {
   line-height: 35px;
   padding-left: 45px;
   text-align: left;
-  background: url('../../assets/image/title-bg.png');
+  background: url("../../assets/image/title-bg.png");
   background-size: 100% 100%;
+  margin-bottom: 10px;
 
-  &.title-level1_1 {
-    background-repeat:no-repeat ;
-    background: url('../../assets/image/title-bg-1.png');
+  .time-dec {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+    height: 28px;
+    line-height: 28px;
   }
 
-  >span {
+  &.title-level1_1 {
+    background-repeat: no-repeat;
+    background: url("../../assets/image/title-bg-1.png");
+  }
+
+  > span {
     position: relative;
     z-index: 10;
   }
 
   &::before {
-    content: '';
+    content: "";
     display: inline-block;
     width: 187px;
     height: 15px;
-    background: url('../../assets/image/title-line1.png');
+    background: url("../../assets/image/title-line1.png");
     background-size: 100% 100%;
     position: absolute;
     left: -50px;
@@ -238,11 +253,11 @@ export default {
   }
 
   &::after {
-    content: '';
+    content: "";
     display: inline-block;
     width: 252px;
     height: 13px;
-    background: url('../../assets/image/title-line2.png');
+    background: url("../../assets/image/title-line2.png");
     background-size: 100% 100%;
     position: absolute;
     left: -100px;
@@ -266,12 +281,14 @@ export default {
 
   50% {
     opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(50px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
+      translate3d(50px, 0px, 0px);
   }
 
   100% {
     opacity: 0;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(100px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
+      translate3d(100px, 0px, 0px);
   }
 }
 
@@ -283,12 +300,14 @@ export default {
 
   50% {
     opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(100px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
+      translate3d(100px, 0px, 0px);
   }
 
   100% {
     opacity: 0;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(200px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
+      translate3d(200px, 0px, 0px);
   }
 }
 
@@ -302,4 +321,5 @@ export default {
     -webkit-transform: rotateZ(360deg);
     transform: rotateZ(360deg);
   }
-}</style>
+}
+</style>
