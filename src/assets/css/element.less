@@ -1,0 +1,181 @@
+// el-form
+.el-form.required-right {
+  .el-form-item.is-required {
+    position: relative;
+    .el-form-item__label:before {
+      position: absolute;
+      right: -15px;
+    }
+  }
+}
+// 按钮宽度 
+.view-config.el-button {
+  color: #1d2128;
+  height: 36px;
+  background: #FFFFFF;
+  border: 1px solid #E5E6EB;
+  color: #1D2128;
+  font-weight: 400;
+}
+.el-button.submit,
+.el-button.cancel {
+  width: 140px;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 6px 50px;
+}
+.dialog-cancel {
+  width: 140px;
+  color: #1d2128;
+  border-color: #e5e6eb;
+  font-weight: 400;
+  border: 1px solid #e5e6eb;
+}
+.el-button.test {
+  background: #FFFFFF;
+  border-color: #2D5CF6;
+  color: #2D5CF6;
+  font-weight: 400;
+}
+// dialog
+.el-dialog__footer {
+  padding: 0 20px 30px;
+}
+
+.el-breadcrumb .el-breadcrumb__inner {
+  font-size: 12px;
+}
+// el-form
+.el-form.is-dark {
+  .el-form-item__content {
+    .el-input__inner {
+      background: #F3F3F5;
+      border-radius: 4px;
+      border: none;
+    }
+  }
+}
+.input.is-dark {
+  .el-input__inner {
+    background: #F3F3F5;
+    border-radius: 4px;
+    border: none;
+  }
+}
+// 搜索input
+.search-input {
+  input {
+    border: none;
+  }
+  .el-input-group__append {
+    border: none !important;
+    background: #ffffff;
+    .el-button {
+      padding: 6px 12px;
+      color: #88909B !important;
+      border: none !important;
+    }
+  }
+}
+// 排序select
+.order-select-box {
+  // margin: 15px 0 !important;
+  text-align: left;
+  .el-select {
+    width: 160px;
+    margin-right: 12px;
+    .el-input {
+      .el-input-group__append {
+        border-color: #ffffff;
+        .el-button {
+          width: auto;
+          background: #ffffff !important;
+          border-color: #ffffff;
+          color: #88909b !important;
+          border-radius: 0 4px 4px 0;
+        }
+      }
+    }
+  }
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    border: none;
+  }
+  .order-select.el-select {
+    margin: 0;
+    width: 110px;
+    .el-input--mini {
+      .el-input__inner {
+        background: none;
+        color: #505968;
+        height: 36px;
+        line-height: 36px;
+        padding-left: 0;
+      }
+      .el-input__icon {
+        line-height: 36px;
+      }
+    }
+  }
+}
+// el-popover
+.el-popover {
+  .search-list {
+    li {
+      padding: 6px;
+    }
+    li:hover {
+      background: #f6f7fb;
+    }
+  }
+}
+
+// 下拉框
+.el-input__icon,.el-input--small .el-input__icon {
+  line-height: 100%;
+}
+
+// table
+.el-table {
+  overflow-x: auto;
+}
+
+/* ************自定义组件的通用样式***************************** */
+// trs-descriptions
+.descriptions {
+  &-header-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+}
+.el-table-filter {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.custom-cascader {
+  .el-cascader-panel {
+    background: #162146;
+    border-radius: 2px;
+    .el-radio__inner {
+      background-color: #162146;
+    }
+    .el-cascader-node__label {
+      color: #ffffff;
+    }
+    .el-radio__input.is-checked .el-radio__inner {
+      background: #123096;
+    }
+    .el-cascader-node:not(.is-disabled):focus {
+      background: #123096;
+    }
+    .el-cascader-node:not(.is-disabled):hover {
+      background: #123096;
+    }
+  }
+  .popper__arrow::after {
+    border-bottom-color: #162146 !important;
+  }
+}
