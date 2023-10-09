@@ -166,3 +166,7 @@ export function parseQuery(_this) {
   }
   return {}
 }
+// 数字千分位
+export function toThousands(num) {
+  return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+}

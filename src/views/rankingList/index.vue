@@ -220,6 +220,7 @@ export default {
         },
       ],
     };
+    // eslint-disable-next-line
     const dataTop = [
       [11, 34, 57, 22, 66],
       [89, 45, 13, 77, 56],
@@ -231,8 +232,7 @@ export default {
       [58, 76, 25, 49, 91],
       [62, 29, 81, 74, 38],
     ];
-    // 生成类似的数组
-
+    // eslint-disable-next-line
     const dataDown = [
       [15, 29, 72, 55, 83],
       [41, 68, 37, 94, 77],
