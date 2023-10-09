@@ -22,7 +22,9 @@
         </p>
         <complaintIndicators />
       </div>
-      <div class="content-center"></div>
+      <div class="content-center">
+        <img class="center-rotate-point" src="@/assets/image/center-rotate-point.png" />
+      </div>
       <div class="content-right">
         <p class="title-level1">
           <span>排行榜（2023年1月1日至今）</span>
@@ -45,8 +47,8 @@
   </div>
 </template>
 <script>
-import complaintIndicators from "@/views/complaintIndicators/index.vue";
-import rankingList from "@/views/rankingList/index.vue";
+import complaintIndicators from '@/views/complaintIndicators/index';
+import rankingList from '@/views/rankingList/index';
 export default {
   data() {
     return {
