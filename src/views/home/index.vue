@@ -17,7 +17,7 @@
       <div class="content-left">
         <p class="title-level1">
           <span
-            >投诉指标<span class="time-dec">（2023年1月1日至今）</span></span
+            >投诉指标<i>（2023年1月1日至今）</i></span
           >
         </p>
         <complaintIndicators />
@@ -27,7 +27,7 @@
       </div>
       <div class="content-right">
         <p class="title-level1">
-          <span>排行榜（2023年1月1日至今）</span>
+          <span>排行榜<i>（2023年1月1日至今）</i></span>
         </p>
         <rankingList />
       </div>

@@ -26,7 +26,7 @@
                   : 'counts counts-default'
               "
             >
-              {{ item.value }}
+              {{ toThousands(item.value) }}
               <span>件</span>
             </div>
             <div class="pre" :style="{ color: item.color }">
@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+import { toThousands } from '@/lib/utils'
 export default {
   data() {
     return {
@@ -54,6 +55,7 @@ export default {
     this.initChart()
   },
   methods: {
+    toThousands,
     initChart() {
       const data = [
         { name: '信用卡', value: 15672, pre: '' },
@@ -114,7 +116,9 @@ export default {
                 position: 'center',
                 fontSize: '12',
                 color: '#',
-                formatter: ['{a|{b}}', '{b|{c}件}'].join('\n'),
+                formatter: (params) => {
+                  return `{a|${params.name}}\n{b|${toThousands(params.value)}件}`
+                },
                 rich: {
                   a: {
                     // 中间字的数值样式
@@ -208,7 +212,7 @@ export default {
           this.$emit('tab3industryParkPie', true)
         }
         this.highlightPie(currentIndex)
-      }, 1000) // 设置自动切换高亮图形的定时器
+      }, 1500) // 设置自动切换高亮图形的定时器
       this.typeBar.on('mouseover', (params) => {
         // 用户鼠标悬浮到某一图形时，停止自动切换并高亮鼠标悬浮的图形
         clearInterval(this.changePieInterval)
@@ -224,7 +228,7 @@ export default {
           currentIndex = (currentIndex + 1) % dataLen
           this.activeIndex = currentIndex
           this.highlightPie(currentIndex)
-        }, 1000)
+        }, 1500)
       })
     },
     selectPie(currentIndex) {
@@ -399,4 +403,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

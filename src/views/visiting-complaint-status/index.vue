@@ -19,7 +19,7 @@
           <div class="sort">{{ index + 1 }}</div>
           <div class="name">{{ item.label }}</div>
           <span class="complaint-counts"
-            >{{ item.complaintCounts }} <i class="unit">件</i></span
+            >{{ toThousands(item.complaintCounts) }} <i class="unit">件</i></span
           >
           <span class="timely-access-rate">{{ item.timelyAccessRate }}%</span>
           <span class="repeat-petition-rate"
@@ -31,6 +31,8 @@
   </div>
 </template>
 <script>
+import { toThousands } from '@/lib/utils'
+
 export default {
   data() {
     return {
@@ -103,6 +105,7 @@ export default {
     }
   },
   methods: {
+    toThousands,
     slideChange() {
       this.activeIndex = this.$refs.visitingComplaintSwiper.swiper.activeIndex
     }
