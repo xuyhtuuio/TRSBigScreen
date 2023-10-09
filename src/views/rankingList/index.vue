@@ -125,7 +125,7 @@ export default {
       series: [
         {
           type: 'bar',
-          data: [32, 32, 10, 11, 41],
+          data: [76, 28, 41, 95, 17],
           barWidth: 6,
           barGap: '20%',
           itemStyle: {
@@ -206,7 +206,7 @@ export default {
       series: [
         {
           type: 'bar',
-          data: [99, 76, 71, 15, 23],
+          data: [15, 29, 72, 55, 83],
 
           itemStyle: {
             normal: {
@@ -238,11 +238,10 @@ export default {
     }
     // eslint-disable-next-line
     const dataTop = [
-      [76, 28, 41, 95, 17],
       [89, 45, 13, 77, 56],
       [43, 88, 24, 19, 75],
       [32, 68, 92, 61, 47],
-      [55, 16, 83, 26, 71],
+      [55, 16, 83, 76, 71],
       [36, 52, 79, 14, 63],
       [87, 41, 98, 31, 67],
       [58, 76, 25, 49, 91],
@@ -250,7 +249,6 @@ export default {
     ]
     // eslint-disable-next-line
     const dataDown = [
-      [15, 29, 72, 55, 83],
       [41, 68, 37, 94, 27],
       [62, 19, 45, 88, 31],
       [79, 51, 24, 36, 66],
@@ -271,9 +269,9 @@ export default {
     setInterval(() => {
       // 更新数据
       this.sign++
-      if (this.sign < 9) {
-        this.option.series[0].data = dataTop[this.sign]
-        this.optionD.series[0].data = dataDown[this.sign]
+      if (this.sign < 8) {
+        this.option.series[0].data = dataTop[this.sign - 1]
+        this.optionD.series[0].data = dataDown[this.sign - 1]
       } else {
         this.sign = 0
       }
