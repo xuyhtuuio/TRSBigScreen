@@ -30,19 +30,24 @@
     <div class="bottom">
       <div class="bottom-item">
         <p class="title-level1 title-level1_1">
-          <span>不同业务投诉情况（2023年1月1日至今）</span>
+          <span>不同业务投诉情况<i>（2023年1月1日至今）</i></span>
         </p>
+        <BusinessComplaintStatus></BusinessComplaintStatus>
       </div>
       <div class="bottom-item">
         <p class="title-level1 title-level1_1">
-          <span>总行来访投诉处理情况（2023年1月1日至今）</span>
+          <span>总行来访投诉处理情况<i>（2023年1月1日至今）</i></span>
         </p>
+        <VisitingComplaintStatus></VisitingComplaintStatus>
       </div>
     </div>
   </div>
 </template>
 <script>
+import BusinessComplaintStatus from '@/views/business-complaint-status/index'
+import VisitingComplaintStatus from '@/views/visiting-complaint-status/index'
 export default {
+  components:{ BusinessComplaintStatus,VisitingComplaintStatus},
   data() {
     return {
       publicPath: process.env.BASE_URL,
@@ -200,15 +205,22 @@ export default {
   font-size: 22px;
   letter-spacing: 0.05em;
   position: relative;
-  height: 35px;
-  line-height: 35px;
+  font-style: italic;
+  height: 38px;
+  line-height: 38px;
   padding-left: 45px;
   text-align: left;
   background: url('../../assets/image/title-bg.png');
   background-size: 100% 100%;
+  i{
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+  }
 
   &.title-level1_1 {
     background-repeat:no-repeat ;
+    background-size: 100% 100% !important;
     background: url('../../assets/image/title-bg-1.png');
   }
 
