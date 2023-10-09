@@ -87,7 +87,7 @@ export default {
         fadeEffect: true,
         // 设置自动轮播
         autoplay: {
-          delay: 200, // 2秒切换一次
+          delay: 500, // 2秒切换一次
           disableOnInteraction: false // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。
         },
         height: 200,
@@ -119,17 +119,23 @@ export default {
     color: #ffffff;
     font-weight: 700;
     text-shadow: 0px 0px 30px rgba(30, 242, 255, 0.3);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.05em;
     position: relative;
+
     height: 30px;
     line-height: 30px;
     padding-left: 40px;
     text-align: left;
-    background: url('../../assets/image/title3.png');
+    background: url('../../assets/image/title3_long.png');
+    background-repeat: no-repeat;
     background-size: 100% 100%;
     display: flex;
+    background-attachment: fixed;
     margin-bottom: 8px;
+  }
+  .title-level2>span{
+    font-weight: 700 ;
   }
 
   width: 100%;
@@ -188,6 +194,7 @@ export default {
       font-weight: 700;
       font-size: 14px;
       line-height: 24px;
+      font-weight: 700;
     }
 
     .complaint-counts i {
@@ -224,19 +231,23 @@ export default {
   .sort {
     flex: 1;
     text-align: left;
+
   }
 
   .name {
     flex: 3;
     text-align: left;
+    font-weight: 700;
   }
 
   .complaint-counts {
     flex: 2;
     text-align: right;
+    font-weight: 700;
 
     .unit {
       font-size: 12px;
+      font-weight: 400;
     }
   }
 
