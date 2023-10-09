@@ -57,172 +57,185 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
 export default {
   data() {
     return {
       option: null,
       optionD: null,
-      sign: 0,
-    };
+      sign: 0
+    }
   },
   mounted() {
     this.option = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow',
-        },
+          type: 'shadow'
+        }
       },
       legend: {},
       grid: {
-        left: '0%',
-        right: '0%',
-        bottom: '0%',
-        top: '0%',
+        left: 0,
+        right: 0,
+        bottom: 30,
+        top: 5
       },
       xAxis: {
         axisTick: {
-          show: false,
+          show: false
         },
         axisLine: {
           show: false,
           lineStyle: {
-            color: '#ffffff',
-          },
+            color: '#ffffff'
+          }
         }, // 不显示坐标轴
         // 不显示坐标轴刻度
         axisLabel: {
-          show: false,
+          show: false
         },
         // 动画效果
         axisPointer: {
-          type: 'shadow',
+          type: 'shadow'
         },
         splitLine: {
           show: false,
           lineStyle: {
             color: ['#262732'],
             width: 1,
-            type: 'solid',
-          },
-        },
+            type: 'solid'
+          }
+        }
       },
       yAxis: {
         data: [],
         splitLine: {
-          show: false,
+          show: false
         },
         axisTick: {
-          show: false,
+          show: false
         },
         axisLine: {
           show: false,
           lineStyle: {
-            color: '#ffffff',
-          },
-        }, // 不显示坐标轴
+            color: '#ffffff'
+          }
+        } // 不显示坐标轴
       },
       series: [
         {
           type: 'bar',
           data: [32, 32, 10, 11, 41],
           barWidth: 6,
-          barGap: '50%' /* 多个并排柱子设置柱子之间的间距 */,
-          barCategoryGap: '50%' /* 多个并排柱子设置柱子之间的间距 */,
+          barGap: '20%',
           itemStyle: {
-            normal: {},
+            normal: {}
           },
           axisTick: {
-            show: false, // 不显示坐标轴刻度线
+            show: false // 不显示坐标轴刻度线
           },
           borderRadius: [30, 10, 10, 10],
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#4AC0FF' },
-            { offset: 1, color: '#2987DC' },
-          ]),
-        },
-      ],
-    };
+          color: '#09CEA9',
+          showBackground: true,
+          backgroundStyle: {
+            color: '#1C1C34'
+          }
+        }
+      ]
+    }
     this.optionD = {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow',
-        },
+          type: 'shadow'
+        }
       },
       legend: {},
       grid: {
-        left: '0%',
-        right: '0%',
-        bottom: '0%',
-        top: '0%',
+        left: 0,
+        right: 0,
+        bottom: 30,
+        top: 5
       },
       xAxis: {
         axisTick: {
-          show: false,
+          show: false
         },
 
         axisLine: {
           show: false,
           lineStyle: {
-            color: '#ffffff',
-          },
+            color: '#ffffff'
+          }
         }, // 不显示坐标轴
         // 不显示坐标轴刻度
         axisLabel: {
-          show: false,
+          show: false
         },
         // 动画效果
         axisPointer: {
-          type: 'shadow',
+          type: 'shadow'
         },
         splitLine: {
           show: false,
           lineStyle: {
             color: ['#262732'],
             width: 1,
-            type: 'solid',
-          },
-        },
+            type: 'solid'
+          }
+        }
       },
       yAxis: {
         data: [],
+
         splitLine: {
-          show: false,
+          show: false
         },
         axisTick: {
-          show: false,
+          show: false
         },
         axisLine: {
           show: false,
           lineStyle: {
-            color: '#ffffff',
-          },
-        }, // 不显示坐标轴
+            color: '#ffffff'
+          }
+        } // 不显示坐标轴
       },
       series: [
         {
           type: 'bar',
           data: [99, 76, 71, 15, 23],
-          barWidth: 6,
+
           itemStyle: {
-            normal: {},
+            normal: {
+              label: {
+                show: true, // 开启显示
+                position: 'top', // 在上方显示
+                textStyle: {
+                  // 数值样式
+                  color: 'red',
+                  fontSize: 16
+                }
+              }
+            }
           },
+
+          barWidth: 6,
           axisTick: {
-            show: false, // 不显示坐标轴刻度线
+            show: false // 不显示坐标轴刻度线
           },
           borderRadius: [10, 10, 10, 10],
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#4AC0FF' },
-            { offset: 1, color: '#2987DC' },
-          ]),
-        },
-      ],
-    };
+          color: '#FB3F22',
+          showBackground: true,
+          backgroundStyle: {
+            color: '#1C1C34'
+          }
+        }
+      ]
+    }
     // eslint-disable-next-line
     const dataTop = [
-      [11, 34, 57, 22, 66],
+      [76, 28, 41, 95, 17],
       [89, 45, 13, 77, 56],
       [43, 88, 24, 19, 75],
       [32, 68, 92, 61, 47],
@@ -230,62 +243,62 @@ export default {
       [36, 52, 79, 14, 63],
       [87, 41, 98, 31, 67],
       [58, 76, 25, 49, 91],
-      [62, 29, 81, 74, 38],
-    ];
+      [62, 29, 81, 74, 38]
+    ]
     // eslint-disable-next-line
     const dataDown = [
       [15, 29, 72, 55, 83],
-      [41, 68, 37, 94, 77],
+      [41, 68, 37, 94, 27],
       [62, 19, 45, 88, 31],
       [79, 51, 24, 36, 66],
       [92, 57, 13, 48, 73],
       [26, 84, 63, 39, 58],
       [33, 12, 75, 22, 97],
       [69, 42, 89, 17, 54],
-      [76, 28, 41, 95, 67],
-    ];
+      [76, 28, 41, 95, 67]
+    ]
     /**
      * 初始化
      */
-    this.init();
+    this.init()
 
     /**
      * 每隔5秒钟刷新一次数据
      */
     setInterval(() => {
       // 更新数据
-      this.sign++;
+      this.sign++
       if (this.sign < 9) {
-        this.option.series[0].data = dataTop[this.sign];
-        this.optionD.series[0].data = dataDown[this.sign];
+        this.option.series[0].data = dataTop[this.sign]
+        this.optionD.series[0].data = dataDown[this.sign]
       } else {
-        this.sign = 0;
+        this.sign = 0
       }
-      this.init();
-    }, 5000);
+      this.init()
+    }, 5000)
   },
 
   methods: {
     init() {
       const myChartTopFive = this.$echarts.init(
         document.getElementById('ranking-topfive')
-      );
+      )
       const myChartDownFive = this.$echarts.init(
         document.getElementById('ranking-downfive')
-      );
-      myChartTopFive.clear();
-      myChartDownFive.clear();
-      myChartTopFive.setOption(this.option, true);
-      myChartDownFive.setOption(this.optionD, true);
+      )
+      myChartTopFive.clear()
+      myChartDownFive.clear()
+      myChartTopFive.setOption(this.option, true)
+      myChartDownFive.setOption(this.optionD, true)
     },
     /**
      * 根据sign判断是不是active
      */
     isActived(index) {
-      return index === this.sign;
-    },
-  },
-};
+      return index === this.sign
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -341,6 +354,13 @@ export default {
   text-align: left;
   position: relative;
   margin-bottom: 10px;
+  padding-left: 20px;
+  padding-top: 2px;
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
 }
 :deep(.el-col) {
   // margin-right: 5px;
