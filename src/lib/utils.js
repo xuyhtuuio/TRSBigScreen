@@ -70,61 +70,6 @@ export function yuanToYi(value, returnType) {
   }
   return parseFloat((+value).toFixed(2))
 }
-// 获取cookie、
-export function getCookie(name) {
-  const reg = new RegExp(`(^| )${name}=([^;]*)(;|$)`);
-  const arr = document.cookie.match(reg);
-  if (arr) {
-    return (unescape(arr[2]));
-  }
-  return null;
-}
-
-// 设置cookie,
-export function setCookie(cName, value, expiredays) {
-  const exdate = new Date();
-  exdate.setDate(exdate.getDate() + expiredays);
-  document.cookie = `${cName}=${escape(value)}${(expiredays === null) ? '' : `;expires=${exdate.toGMTString()}`}`;
-}
-
-// 删除cookie
-export function delCookie(name) {
-  const exp = new Date();
-  exp.setTime(exp.getTime() - 1);
-  const cval = getCookie(name);
-  if (cval !== null) {
-    document.cookie = `${name}=${cval};expires=${exp.toGMTString()}`;
-  }
-}
-
-// 时间格式转换
-export function formatDuring(mss, type) {
-  const days = parseInt(mss / (1000 * 60 * 60 * 24));
-  const hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.ceil((mss % (1000 * 60)) / 1000);
-  if (type === 1) {
-    const h = hours + days * 24;
-    return `${h < 10 ? `0${h}` : h}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-  }
-  if (days !== 0) {
-    return `${days}天${hours}小时${minutes}分钟${seconds}秒`;
-  } if (hours !== 0) {
-    return `${hours}小时${minutes}分钟${seconds}秒`;
-  } if (minutes !== 0) {
-    return `${minutes}分钟${seconds}秒`;
-  }
-  return `${+seconds}秒`;
-}
-
-// 时间戳转化为yyyy-MM-dd
-export function timestampToNormal(date, format = '-') {
-  const time = new Date(+date);
-  const year = time.getFullYear(); // 年
-  const month = ('0' + (time.getMonth() + 1)).slice(-2); // 月
-  const day = ('0' + time.getDate()).slice(-2); // 日
-  return year + format + month + format + day;
-}
 
 // 加密
 export function toCode(str) { // 加密字符串
@@ -206,66 +151,6 @@ export function getUUID() {
 
 // 判断给定值是否为空
 export const isEmpty = val => (typeof val === 'string' && val.trim() === '') || val === null || val === undefined
-
-/* 字符串解析成元素节点类型 */
-export function parseElement(str) {
-  const o = document.createElement('div');
-  o.innerHTML = str;
-  return o.childNodes;
-}
-/* 元素节点类型解析成字符串 */
-export function stringIze(obj) {
-  const o = document.createElement('div');
-  o.appendChild(obj);
-  return o.innerHTML;
-}
-export function formatterProvince(areaValue) {
-  if (!areaValue) {
-    return '';
-  }
-  // 只处理省份，如果市直辖市或地级市直接返回
-  if (areaValue.endsWith('市')) {
-    return areaValue
-  }
-  let province = ''
-  if (areaValue.includes('内蒙古') || areaValue.includes('黑龙江')) {
-    province = areaValue.slice(0, 3)
-  } else {
-    province = areaValue.slice(0, 2)
-  }
-  return province
-}
-// d对企业评分进行四舍五入，为0 则返回0.01
-export function toFixedEntValue(num) {
-  const entValue = Number(num).toFixed(2) || '0.00';
-  return entValue === '0.00' ? 0.01 : entValue;
-}
-export function switchIndustryTab(num) {
-  // eslint-disable-next-line
-  switch (num) {
-    case 0:
-      return 1
-    case 1:
-      return 2;
-    case 2:
-      return 2;
-    case 3:
-      return 3
-  }
-}
-export function switchIndustryTabAbstract(num) {
-  // eslint-disable-next-line
-  switch (num) {
-    case 0:
-      return 0
-    case 1:
-      return 1;
-    case 2:
-      return 1;
-    case 3:
-      return 2
-  }
-}
 
 // 处理query参数
 export function parseQuery(_this) {
