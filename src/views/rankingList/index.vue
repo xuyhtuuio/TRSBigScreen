@@ -129,7 +129,9 @@ export default {
           barWidth: 6,
           barGap: '20%',
           itemStyle: {
-            normal: {}
+            normal: {
+              barBorderRadius: [0, 20, 20, 0]
+            }
           },
           axisTick: {
             show: false // 不显示坐标轴刻度线
@@ -208,6 +210,7 @@ export default {
 
           itemStyle: {
             normal: {
+              barBorderRadius: [0, 20, 20, 0],
               label: {
                 show: true, // 开启显示
                 position: 'top', // 在上方显示
@@ -224,7 +227,7 @@ export default {
           axisTick: {
             show: false // 不显示坐标轴刻度线
           },
-          borderRadius: [10, 10, 10, 10],
+
           color: '#FB3F22',
           showBackground: true,
           backgroundStyle: {
