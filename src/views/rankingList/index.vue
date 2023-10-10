@@ -79,10 +79,18 @@ export default {
     return {
       option: null,
       optionD: null,
-      sign: 0
+      sign: 0,
+      myChartTopFive: null,
+      myChartDownFive: null,
     }
   },
   mounted() {
+    this.myChartTopFive = this.$echarts.init(
+      document.getElementById('ranking-topfive')
+    )
+    this.myChartDownFive = this.$echarts.init(
+      document.getElementById('ranking-downfive')
+    )
     const dataTop = [
       [29, 15, 93, 27, 24],
       [89, 45, 13, 77, 56],
@@ -303,16 +311,10 @@ export default {
 
   methods: {
     init() {
-      const myChartTopFive = this.$echarts.init(
-        document.getElementById('ranking-topfive')
-      )
-      const myChartDownFive = this.$echarts.init(
-        document.getElementById('ranking-downfive')
-      )
-      myChartTopFive.clear()
-      myChartDownFive.clear()
-      myChartTopFive.setOption(this.option, true)
-      myChartDownFive.setOption(this.optionD, true)
+      this.myChartTopFive.clear()
+      this.myChartDownFive.clear()
+      this.myChartTopFive.setOption(this.option, true)
+      this.myChartDownFive.setOption(this.optionD, true)
     },
     /**
      * 根据sign判断是不是active
