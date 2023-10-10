@@ -15,7 +15,7 @@
       v-loading="quaEnpSwiperLoading"
     >
       <swiper-slide v-for="(item, index) in picList" :key="index">
-        <div class="default-item">
+        <div class="default-item" >
           <div class="sort">{{ index + 1 }}</div>
           <div class="name">{{ item.label }}</div>
           <span class="complaint-counts"
@@ -83,11 +83,12 @@ export default {
         loop: true, // 无缝轮播
         spaceBetween: 5, // 板块间距
         centeredSlides: false,
-        speed: 2000,
+        speed: 2500,
         fadeEffect: true,
         // 设置自动轮播
         autoplay: {
-          delay: 500, // 2秒切换一次
+          delay: 5, // 2秒切换一次
+          stopOnLastSlide: false,
           disableOnInteraction: false // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。
         },
         height: 200,
@@ -147,6 +148,9 @@ export default {
   .my_swiper {
     height: 200px;
   }
+  /deep/ .swiper-wrapper {
+      transition-timing-function: linear !important; /* 没错就是这个属性 */
+    }
 
   .swiper-slide {
     width: 100%;
