@@ -53,20 +53,23 @@
     <div id="ranking-topfive" class="ranking-outter"></div>
     <div class="top-ranking-dec">
       <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.1</span>乌鲁木齐分行</p>
+      <p><span>NO.1</span>广东分行</p>
+      <p><span>NO.1</span>上海分行</p>
+      <p><span>NO.1</span>北京分行</p>
+      <p><span>NO.1</span>浙江分行</p>
     </div>
-    <div class="ranking-title">后五名</div>
+    <div class="bottom-area">
+      <div class="ranking-title">后五名</div>
+      <div id="ranking-downfive" class="ranking-outter"></div>
+    </div>
+
     <div class="down-ranking-dec">
-      <p><span>NO.37</span>乌鲁木齐分行</p>
-      <p><span>NO.38</span>乌鲁木齐分行</p>
-      <p><span>NO.39</span>乌鲁木齐分行</p>
-      <p><span>NO.40</span>乌鲁木齐分行</p>
-      <p><span>NO.41</span>乌鲁木齐分行</p>
+      <p><span>NO.37</span>湖南分行</p>
+      <p><span>NO.38</span>云南分行</p>
+      <p><span>NO.39</span>广西分行</p>
+      <p><span>NO.40</span>江西分行</p>
+      <p><span>NO.41</span>山东分行</p>
     </div>
-    <div id="ranking-downfive" class="ranking-outter"></div>
   </div>
 </template>
 
@@ -110,7 +113,7 @@ export default {
         left: 0,
         right: 0,
         top: 0,
-        bottom: 5
+        bottom: 15
       },
       xAxis: [
         {
@@ -182,7 +185,7 @@ export default {
           },
 
           itemStyle: {
-            barBorderRadius: [10, 10, 30, 30],
+            barBorderRadius: [0, 20, 20, 0],
             color: '#09CEA9'
           }
         }
@@ -196,7 +199,7 @@ export default {
         left: 0,
         right: 0,
         top: 0,
-        bottom: 5
+        bottom: 15
       },
       xAxis: [
         {
@@ -268,7 +271,7 @@ export default {
           },
 
           itemStyle: {
-            barBorderRadius: [10, 10, 30, 30],
+            barBorderRadius: [0, 20, 20, 0],
             color: '#FB3F22'
           }
         }
@@ -324,6 +327,7 @@ export default {
 <style lang="less" scoped>
 .outter {
   width: 362px;
+  margin-top: 15px;
   .top-area {
     .default {
       background: linear-gradient(
@@ -340,6 +344,10 @@ export default {
   height: 238px;
 }
 
+.bottom-area {
+  position: relative;
+  bottom: 20px;
+}
 //active 覆盖 default
 .default {
   background: linear-gradient(
@@ -385,7 +393,7 @@ export default {
 
 .top-ranking-dec {
   position: absolute;
-  top: 166px;
+  top: 176px;
 }
 
 .top-ranking-dec p {
@@ -394,8 +402,8 @@ export default {
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 0em;
-  text-align: right;
-  margin-bottom: 22px;
+  text-align: left;
+  margin-bottom: 20px;
 
   span {
     font-family: Microsoft YaHei;
@@ -411,7 +419,7 @@ export default {
 
 .down-ranking-dec {
   position: absolute;
-  top: 443px;
+  top: 434px;
 }
 .down-ranking-dec p {
   font-family: Microsoft YaHei;
@@ -420,7 +428,7 @@ export default {
   line-height: 24px;
   letter-spacing: 0em;
   text-align: right;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 
   span {
     font-family: Microsoft YaHei;

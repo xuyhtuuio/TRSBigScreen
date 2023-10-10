@@ -85,24 +85,22 @@
 <script>
 export default {
   data() {
-    return {};
+    return {}
   },
   created() {},
   mounted() {},
   beforeDestroy() {},
-  methods: {},
-};
+  methods: {}
+}
 </script>
 
 <style scoped lang="less">
 .outter {
-  // width: 100%;
-  // height: 100%;
-  // background-color: #000;
+  margin-top: 15px;
   .top-area {
     width: 362px;
     height: 163px;
-    background: url("../../assets/image/enp_kanban0.png");
+    background: url('../../assets/image/enp_kanban0.png');
     background-size: contain;
 
     .top-area-title {
@@ -127,7 +125,13 @@ export default {
       margin-top: 30px;
 
       .top-item {
-        margin: 0 20px 0 20px;
+        width: 99px;
+        height: 84px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
         .item-dec {
           font-family: Microsoft YaHei;
           font-size: 12px;
@@ -181,10 +185,10 @@ export default {
       width: 177px;
       height: 106px;
       border-radius: 1px;
-      background: url("../../assets/image/enp-kanban2.png");
+      background: url('../../assets/image/enp-kanban2.png');
       background-size: contain;
       margin-right: 8px;
-      margin: 5px 8px 5px 0;
+      margin: 10px 8px 5px 0;
       &:nth-child(2n) {
         margin-right: 0;
       }
@@ -244,7 +248,7 @@ export default {
   .bottom-area {
     width: 362px;
     height: 80px;
-    background: url("../../assets/image/enp_kanban1.png");
+    background: url('../../assets/image/enp_kanban1.png');
     background-size: contain;
     background-repeat: no-repeat;
 
