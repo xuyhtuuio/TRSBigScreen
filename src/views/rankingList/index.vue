@@ -53,10 +53,10 @@
     <div id="ranking-topfive" class="ranking-outter"></div>
     <div class="top-ranking-dec">
       <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.1</span>广东分行</p>
-      <p><span>NO.1</span>上海分行</p>
-      <p><span>NO.1</span>北京分行</p>
-      <p><span>NO.1</span>浙江分行</p>
+      <p><span>NO.2</span>广东分行</p>
+      <p><span>NO.3</span>上海分行</p>
+      <p><span>NO.4</span>北京分行</p>
+      <p><span>NO.5</span>浙江分行</p>
     </div>
     <div class="bottom-area">
       <div class="ranking-title">后五名</div>
@@ -85,12 +85,19 @@ export default {
     }
   },
   mounted() {
+    /**
+     * 初始化echarts
+     */
     this.myChartTopFive = this.$echarts.init(
       document.getElementById('ranking-topfive')
     )
     this.myChartDownFive = this.$echarts.init(
       document.getElementById('ranking-downfive')
     )
+
+    /**
+     * 模拟数据
+     */
     const dataTop = [
       [29, 15, 93, 27, 24],
       [89, 45, 13, 77, 56],
@@ -113,6 +120,10 @@ export default {
       [69, 42, 99, 17, 54],
       [76, 28, 41, 95, 67]
     ]
+
+    /**
+     * 配置项
+     */
     this.option = {
       legend: {
         show: false
@@ -310,6 +321,9 @@ export default {
   },
 
   methods: {
+    /**
+     * 初始化
+     */
     init() {
       this.myChartTopFive.clear()
       this.myChartDownFive.clear()
