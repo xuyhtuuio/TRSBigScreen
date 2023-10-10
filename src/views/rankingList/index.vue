@@ -51,7 +51,21 @@
     </div>
     <div class="ranking-title">前五名</div>
     <div id="ranking-topfive" class="ranking-outter"></div>
+    <div class="top-ranking-dec">
+      <p><span>NO.1</span>乌鲁木齐分行</p>
+      <p><span>NO.1</span>乌鲁木齐分行</p>
+      <p><span>NO.1</span>乌鲁木齐分行</p>
+      <p><span>NO.1</span>乌鲁木齐分行</p>
+      <p><span>NO.1</span>乌鲁木齐分行</p>
+    </div>
     <div class="ranking-title">后五名</div>
+    <div class="down-ranking-dec">
+      <p><span>NO.37</span>乌鲁木齐分行</p>
+      <p><span>NO.38</span>乌鲁木齐分行</p>
+      <p><span>NO.39</span>乌鲁木齐分行</p>
+      <p><span>NO.40</span>乌鲁木齐分行</p>
+      <p><span>NO.41</span>乌鲁木齐分行</p>
+    </div>
     <div id="ranking-downfive" class="ranking-outter"></div>
   </div>
 </template>
@@ -66,198 +80,201 @@ export default {
     }
   },
   mounted() {
+    const dataTop = [
+      [29, 15, 93, 27, 24],
+      [89, 45, 13, 77, 56],
+      [43, 88, 24, 99, 75],
+      [32, 68, 92, 61, 47],
+      [55, 16, 99, 76, 71],
+      [36, 52, 99, 14, 63],
+      [87, 41, 22, 99, 67],
+      [58, 76, 25, 49, 91],
+      [62, 29, 81, 74, 38]
+    ]
+    const dataDown = [
+      [99, 75, 23, 27, 56],
+      [41, 68, 37, 94, 27],
+      [62, 19, 45, 99, 31],
+      [98, 51, 24, 36, 66],
+      [97, 57, 13, 48, 73],
+      [26, 99, 63, 39, 58],
+      [33, 12, 75, 22, 97],
+      [69, 42, 99, 17, 54],
+      [76, 28, 41, 95, 67]
+    ]
     this.option = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
+      legend: {
+        show: false
       },
-      legend: {},
       grid: {
         left: 0,
         right: 0,
-        bottom: 30,
-        top: 5
+        top: 0,
+        bottom: 5
       },
-      xAxis: {
-        axisTick: {
-          show: false
-        },
-        axisLine: {
+      xAxis: [
+        {
+          splitLine: {
+            show: false
+          },
+          type: 'value',
           show: false,
-          lineStyle: {
-            color: '#ffffff'
-          }
-        }, // 不显示坐标轴
-        // 不显示坐标轴刻度
-        axisLabel: {
-          show: false
-        },
-        // 动画效果
-        axisPointer: {
-          type: 'shadow'
-        },
-        splitLine: {
-          show: false,
-          lineStyle: {
-            color: ['#262732'],
-            width: 1,
-            type: 'solid'
+          axisLine: {
+            // x轴坐标轴，false为隐藏，true为显示
+            show: false
           }
         }
-      },
-      yAxis: {
-        data: [],
-        splitLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
-        axisLine: {
-          show: false,
-          lineStyle: {
-            color: '#ffffff'
-          }
-        } // 不显示坐标轴
-      },
-      series: [
+      ],
+      yAxis: [
         {
-          type: 'bar',
-          data: [76, 28, 41, 95, 17],
-          barWidth: 6,
-          barGap: '20%',
-          itemStyle: {
-            normal: {
-              barBorderRadius: [0, 20, 20, 0]
+          show: true,
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          type: 'category',
+          axisTick: {
+            show: false
+          },
+          inverse: true,
+          axisLabel: {
+            show: false
+          }
+        },
+        {
+          type: 'category',
+          inverse: true,
+          axisTick: 'none',
+          axisLine: 'none',
+          show: true,
+          axisLabel: {
+            inside: true,
+            verticalAlign: 'bottom',
+            lineHeight: 34,
+            margin: 5, // 刻度标签与轴线之间的距离
+            show: true,
+            textStyle: {
+              color: 'rgba(255, 255, 255, 1)',
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: 700,
+              fontFamily: 'Microsoft YaHei'
+            },
+            formatter(value) {
+              return value + ' %'
             }
           },
-          axisTick: {
-            show: false // 不显示坐标轴刻度线
-          },
-          borderRadius: [30, 10, 10, 10],
-          color: '#09CEA9',
+          data: dataTop[this.sign]
+        }
+      ],
+      series: [
+        {
+          show: true,
+          name: '',
+          type: 'bar',
+          data: dataTop[this.sign],
+          barWidth: 6, // 柱子宽度
           showBackground: true,
           backgroundStyle: {
             color: '#1C1C34'
+          },
+
+          itemStyle: {
+            barBorderRadius: [10, 10, 30, 30],
+            color: '#09CEA9'
           }
         }
       ]
     }
     this.optionD = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
+      legend: {
+        show: false
       },
-      legend: {},
       grid: {
         left: 0,
         right: 0,
-        bottom: 30,
-        top: 5
+        top: 0,
+        bottom: 5
       },
-      xAxis: {
-        axisTick: {
-          show: false
-        },
-
-        axisLine: {
+      xAxis: [
+        {
+          splitLine: {
+            show: false
+          },
+          type: 'value',
           show: false,
-          lineStyle: {
-            color: '#ffffff'
-          }
-        }, // 不显示坐标轴
-        // 不显示坐标轴刻度
-        axisLabel: {
-          show: false
-        },
-        // 动画效果
-        axisPointer: {
-          type: 'shadow'
-        },
-        splitLine: {
-          show: false,
-          lineStyle: {
-            color: ['#262732'],
-            width: 1,
-            type: 'solid'
+          axisLine: {
+            // x轴坐标轴，false为隐藏，true为显示
+            show: false
           }
         }
-      },
-      yAxis: {
-        data: [],
-
-        splitLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
-        axisLine: {
-          show: false,
-          lineStyle: {
-            color: '#ffffff'
-          }
-        } // 不显示坐标轴
-      },
-      series: [
+      ],
+      yAxis: [
         {
-          type: 'bar',
-          data: [15, 29, 72, 55, 83],
-
-          itemStyle: {
-            normal: {
-              barBorderRadius: [0, 20, 20, 0],
-              label: {
-                show: true, // 开启显示
-                position: 'top', // 在上方显示
-                textStyle: {
-                  // 数值样式
-                  color: 'red',
-                  fontSize: 16
-                }
-              }
+          show: true,
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          type: 'category',
+          axisTick: {
+            show: false
+          },
+          inverse: true,
+          axisLabel: {
+            show: false
+          }
+        },
+        {
+          type: 'category',
+          inverse: true,
+          axisTick: 'none',
+          axisLine: 'none',
+          show: true,
+          axisLabel: {
+            inside: true,
+            verticalAlign: 'bottom',
+            lineHeight: 28,
+            margin: 5, // 刻度标签与轴线之间的距离
+            show: true,
+            textStyle: {
+              color: 'rgba(255, 255, 255, 1)',
+              fontSize: 14,
+              lineHeight: 20,
+              fontWeight: 700,
+              fontFamily: 'Microsoft YaHei'
+            },
+            formatter(value) {
+              return value + ' %'
             }
           },
-
-          barWidth: 6,
-          axisTick: {
-            show: false // 不显示坐标轴刻度线
-          },
-
-          color: '#FB3F22',
+          data: dataDown[this.sign]
+        }
+      ],
+      series: [
+        {
+          show: true,
+          name: '',
+          type: 'bar',
+          data: dataDown[this.sign],
+          barWidth: 6, // 柱子宽度
           showBackground: true,
           backgroundStyle: {
             color: '#1C1C34'
+          },
+
+          itemStyle: {
+            barBorderRadius: [10, 10, 30, 30],
+            color: '#FB3F22'
           }
         }
       ]
     }
-    // eslint-disable-next-line
-    const dataTop = [
-      [89, 45, 13, 77, 56],
-      [43, 88, 24, 19, 75],
-      [32, 68, 92, 61, 47],
-      [55, 16, 83, 76, 71],
-      [36, 52, 79, 14, 63],
-      [87, 41, 98, 31, 67],
-      [58, 76, 25, 49, 91],
-      [62, 29, 81, 74, 38]
-    ]
-    // eslint-disable-next-line
-    const dataDown = [
-      [41, 68, 37, 94, 27],
-      [62, 19, 45, 88, 31],
-      [79, 51, 24, 36, 66],
-      [92, 57, 13, 48, 73],
-      [26, 84, 63, 39, 58],
-      [33, 12, 75, 22, 97],
-      [69, 42, 89, 17, 54],
-      [76, 28, 41, 95, 67]
-    ]
+
     /**
      * 初始化
      */
@@ -269,9 +286,11 @@ export default {
     setInterval(() => {
       // 更新数据
       this.sign++
-      if (this.sign < 8) {
-        this.option.series[0].data = dataTop[this.sign - 1]
-        this.optionD.series[0].data = dataDown[this.sign - 1]
+      if (this.sign < 9) {
+        this.option.series[0].data = dataTop[this.sign]
+        this.option.yAxis[1].data = dataTop[this.sign]
+        this.optionD.series[0].data = dataDown[this.sign]
+        this.optionD.yAxis[1].data = dataDown[this.sign]
       } else {
         this.sign = 0
       }
@@ -362,6 +381,57 @@ export default {
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 0em;
+}
+
+.top-ranking-dec {
+  position: absolute;
+  top: 166px;
+}
+
+.top-ranking-dec p {
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: right;
+  margin-bottom: 22px;
+
+  span {
+    font-family: Microsoft YaHei;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffe600;
+    margin-right: 10px;
+  }
+}
+
+.down-ranking-dec {
+  position: absolute;
+  top: 443px;
+}
+.down-ranking-dec p {
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: right;
+  margin-bottom: 22px;
+
+  span {
+    font-family: Microsoft YaHei;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffe600;
+    margin-right: 10px;
+  }
 }
 :deep(.el-col) {
   // margin-right: 5px;
