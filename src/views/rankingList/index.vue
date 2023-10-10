@@ -427,7 +427,7 @@ export default {
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 0em;
-  text-align: right;
+  text-align: left;
   margin-bottom: 20px;
 
   span {
