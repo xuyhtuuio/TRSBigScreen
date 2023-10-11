@@ -365,6 +365,7 @@ export default {
               ) {
                 return value + ' %'
               }
+
               return value
             }
           },
