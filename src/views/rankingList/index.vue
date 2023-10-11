@@ -52,11 +52,11 @@
     <div class="ranking-title">前五名</div>
     <div id="ranking-topfive" class="ranking-outter"></div>
     <div class="top-ranking-dec">
-      <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.2</span>广东分行</p>
-      <p><span>NO.3</span>上海分行</p>
-      <p><span>NO.4</span>北京分行</p>
-      <p><span>NO.5</span>浙江分行</p>
+      <p><span>NO.1</span>石家庄分行</p>
+      <p><span>NO.2</span>无锡分行</p>
+      <p><span>NO.3</span>杭州分行</p>
+      <p><span>NO.4</span>长沙分行</p>
+      <p><span>NO.5</span>北京分行</p>
     </div>
     <div class="bottom-area">
       <div class="ranking-title">后五名</div>
@@ -64,11 +64,11 @@
     </div>
 
     <div class="down-ranking-dec">
-      <p><span>NO.37</span>湖南分行</p>
-      <p><span>NO.38</span>云南分行</p>
-      <p><span>NO.39</span>广西分行</p>
-      <p><span>NO.40</span>江西分行</p>
-      <p><span>NO.41</span>山东分行</p>
+      <p><span>NO.11</span>呼和浩特分行</p>
+      <p><span>NO.12</span>南通分行</p>
+      <p><span>NO.13</span>贵阳分行</p>
+      <p><span>NO.14</span>合肥分行</p>
+      <p><span>NO.15</span>苏州分行</p>
     </div>
   </div>
 </template>
@@ -82,6 +82,7 @@ export default {
       sign: 0,
       myChartTopFive: null,
       myChartDownFive: null,
+
     }
   },
   mounted() {
@@ -109,6 +110,7 @@ export default {
       [58.29, 76.31, 25.39, 49.12, 91.49],
       [62.22, 29.78, 81.23, 74.46, 38.16]
     ]
+
     const dataDown = [
       [93.11, 75.22, 23.89, 27.12, 56.92],
       [41.59, 68.78, 37.28, 94.12, 27.26],
