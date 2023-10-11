@@ -58,12 +58,12 @@ export default {
     toThousands,
     initChart() {
       const data = [
-        { name: '信用卡', value: 15672, pre: '' },
-        { name: '借记卡', value: 11210, pre: '' },
-        { name: '个人贷款', value: 9325, pre: '' },
-        { name: '理财类', value: 7245, pre: '' },
-        { name: '其他零售', value: 5145, pre: '' },
-        { name: '对公/小微', value: 4941, pre: '' }
+        { name: '信用卡', value: 4504489, pre: '' },
+        { name: '借记卡', value: 2438637, pre: '' },
+        { name: '个人贷款', value: 13005325, pre: '' },
+        { name: '理财类', value: 1131670, pre: '' },
+        { name: '其他零售', value: 621309, pre: '' },
+        { name: '对公/小微', value: 488171, pre: '' }
       ]
 
       const total = data.reduce((prev, cur) => {
@@ -260,6 +260,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .full-cpmplaint {
+  min-width: 360px;
   .title-level2 {
     margin-top: 11px;
     color: #ffffff;

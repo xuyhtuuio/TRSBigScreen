@@ -15,15 +15,16 @@
       v-loading="quaEnpSwiperLoading"
     >
       <swiper-slide v-for="(item, index) in picList" :key="index">
-        <div class="default-item" >
+        <div class="default-item">
           <div class="sort">{{ index + 1 }}</div>
           <div class="name">{{ item.label }}</div>
           <span class="complaint-counts"
-            >{{ toThousands(item.complaintCounts) }} <i class="unit">件</i></span
+            >{{ toThousands(item.complaintCounts) }}
+            <i class="unit">件</i></span
           >
-          <span class="timely-access-rate">{{ item.timelyAccessRate }}%</span>
+          <span class="timely-access-rate">{{ item.timelyAccessRate }}</span>
           <span class="repeat-petition-rate"
-            >{{ item.repeatPetitionRate }}%</span
+            >{{ item.repeatPetitionRate }}</span
           >
         </div>
       </swiper-slide>
@@ -39,40 +40,94 @@ export default {
       activeSlide: 0,
       picList: [
         {
-          label: '江西分行',
-          complaintCounts: 5732,
-          timelyAccessRate: 62.45,
-          repeatPetitionRate: 23.45
+          label: '石家庄分行',
+          complaintCounts: '1197',
+          timelyAccessRate: '76.61%',
+          repeatPetitionRate: '21.10%'
         },
         {
-          label: '山东分行',
-          complaintCounts: 4472,
-          timelyAccessRate: 72.45,
-          repeatPetitionRate: 13.45
+          label: '无锡分行',
+          complaintCounts: '934',
+          timelyAccessRate: '64.00%',
+          repeatPetitionRate: '19.80%'
         },
         {
-          label: '广西分行',
-          complaintCounts: 2123,
-          timelyAccessRate: 32.48,
-          repeatPetitionRate: 26.64
+          label: '杭州分行',
+          complaintCounts: '909',
+          timelyAccessRate: '53.00%',
+          repeatPetitionRate: '31.00%'
         },
         {
-          label: '云南分行',
-          complaintCounts: 1246,
-          timelyAccessRate: 52.45,
-          repeatPetitionRate: 12.45
-        },
-        {
-          label: '河南分行',
-          complaintCounts: 10020,
-          timelyAccessRate: 49.19,
-          repeatPetitionRate: 19.98
+          label: '长沙分行',
+          complaintCounts: '982',
+          timelyAccessRate: '51.00%',
+          repeatPetitionRate: '33.41%'
         },
         {
           label: '北京分行',
-          complaintCounts: 9901,
-          timelyAccessRate: 57.21,
-          repeatPetitionRate: 10.45
+          complaintCounts: '839',
+          timelyAccessRate: '63.54%',
+          repeatPetitionRate: '24.00%'
+        },
+        {
+          label: '重庆分行',
+          complaintCounts: '810',
+          timelyAccessRate: '74.60%',
+          repeatPetitionRate: '17.00%'
+        },
+        {
+          label: '青岛分行',
+          complaintCounts: '717',
+          timelyAccessRate: '57.90%',
+          repeatPetitionRate: '29.30%'
+        },
+        {
+          label: '哈尔滨分行',
+          complaintCounts: '709',
+          timelyAccessRate: '66.91%',
+          repeatPetitionRate: '16.90%'
+        },
+        {
+          label: '宁波分行',
+          complaintCounts: '698',
+          timelyAccessRate: '57.90%',
+          repeatPetitionRate: '19.20%'
+        },
+        {
+          label: '海口分行',
+          complaintCounts: '674',
+          timelyAccessRate: '48.31%',
+          repeatPetitionRate: '18.50%'
+        },
+        {
+          label: '呼和浩特分行',
+          complaintCounts: '636',
+          timelyAccessRate: '44.76%',
+          repeatPetitionRate: '21.70%'
+        },
+        {
+          label: '南通分行',
+          complaintCounts: '610',
+          timelyAccessRate: '65.10%',
+          repeatPetitionRate: '24.00%'
+        },
+        {
+          label: '贵阳分行',
+          complaintCounts: '592',
+          timelyAccessRate: '59.77%',
+          repeatPetitionRate: '19.40%'
+        },
+        {
+          label: '合肥分行',
+          complaintCounts: '501',
+          timelyAccessRate: '49.08%',
+          repeatPetitionRate: '15.50%'
+        },
+        {
+          label: '苏州分行',
+          complaintCounts: '498',
+          timelyAccessRate: '57.20%',
+          repeatPetitionRate: '20.10%'
         }
       ],
       activeIndex: 0,
@@ -135,8 +190,8 @@ export default {
     background-attachment: fixed;
     margin-bottom: 8px;
   }
-  .title-level2>span{
-    font-weight: 700 ;
+  .title-level2 > span {
+    font-weight: 700;
   }
 
   width: 100%;
@@ -149,8 +204,8 @@ export default {
     height: 200px;
   }
   /deep/ .swiper-wrapper {
-      transition-timing-function: linear !important; /* 没错就是这个属性 */
-    }
+    transition-timing-function: linear !important; /* 没错就是这个属性 */
+  }
 
   .swiper-slide {
     width: 100%;
@@ -235,7 +290,6 @@ export default {
   .sort {
     flex: 1;
     text-align: left;
-
   }
 
   .name {
@@ -264,4 +318,5 @@ export default {
     flex: 2;
     text-align: right;
   }
-}</style>
+}
+</style>
