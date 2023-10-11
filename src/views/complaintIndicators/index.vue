@@ -35,14 +35,14 @@
         <p class="center-title">银保监转办投诉</p>
         <div class="center-content">
           <p class="center-num-dec">
-            <span class="center-num">{{ bank_num }}</span>件
+            <span class="center-num">{{ bank_num.toFixed(0) }}</span>件
           </p>
         </div>
       </div>
       <div class="center-item">
         <p class="center-title">人行转办投诉</p>
         <div class="center-content">
-          <p class="center-num-dec"><span class="center-num">{{ complaint_num }}</span>件</p>
+          <p class="center-num-dec"><span class="center-num">{{ complaint_num.toFixed(0) }}</span>件</p>
         </div>
       </div>
       <div class="center-item">
@@ -98,8 +98,8 @@ export default {
   },
   created() {},
   mounted() {
-    gsap.to(this, { duration: 0.5, bank_num: 20000 })
-    gsap.to(this, { duration: 0.5, complaint_num: 20000 })
+    gsap.to(this, { duration: 0.8, bank_num: 20000 })
+    gsap.to(this, { duration: 0.8, complaint_num: 20000 })
   },
   beforeDestroy() {},
   methods: {}
