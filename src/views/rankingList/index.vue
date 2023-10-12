@@ -100,7 +100,6 @@ export default {
      * 模拟数据
      */
     const dataTop = [
-      // 数据的第一个值为百分比刻度值，后面的值为柱子的值
       [98, 96.65, 92.21, 92.56, 94.45],
       [1.38, 2.14, 2.54, 2.11, 1.76],
       [9.87, 11.31, 8.41, 9.12, 8],
@@ -462,6 +461,12 @@ export default {
      */
     this.init()
 
+    this.AssignmentData = () => {
+      this.option.series[0].data = this.fingureData('top')
+      this.option.yAxis[1].data = this.fingureData('top')
+      this.optionD.series[0].data = this.fingureData('down')
+      this.optionD.yAxis[1].data = this.fingureData('down')
+    }
     /**
      * 每隔5秒钟刷新一次数据
      */
@@ -469,12 +474,10 @@ export default {
       // 更新数据
       ++this.sign
       if (this.sign < 9) {
-        this.option.series[0].data = this.fingureData('top')
-        this.option.yAxis[1].data = this.fingureData('top')
-        this.optionD.series[0].data = this.fingureData('down')
-        this.optionD.yAxis[1].data = this.fingureData('down')
+        this.AssignmentData()
       } else {
         this.sign = 0
+        this.AssignmentData()
       }
       this.init()
     }, 5000)
