@@ -105,6 +105,7 @@ export default {
   beforeDestroy() {},
   methods: {
     random(times) {
+      // 生成1到times的随机数
       return Math.floor(Math.random() * times + 1)
     },
     refresh() {

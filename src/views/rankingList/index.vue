@@ -100,6 +100,7 @@ export default {
      * 模拟数据
      */
     const dataTop = [
+      // 数据的第一个值为百分比刻度值，后面的值为柱子的值
       [98, 96.65, 92.21, 92.56, 94.45],
       [1.38, 2.14, 2.54, 2.11, 1.76],
       [9.87, 11.31, 8.41, 9.12, 8],
@@ -129,6 +130,60 @@ export default {
     ]
 
     /**
+     * 动态的计算出最接近的刻度值
+     */
+    this.fingureData = (to) => {
+      const max = Math.max(...dataTop[this.sign])
+      const maxD = Math.max(...dataDown[this.sign])
+      let maxLen = 0
+      // 判断是几位数
+      const maxStr = to === 'top' ? max.toString() : maxD.toString()
+      // 转换成数组
+      const maxArr = maxStr.split('')
+      if (maxArr.find((item) => item === '.')) {
+        // 说明是小数,截取.之前的数
+        maxLen = maxStr.split('.')[0].length
+      } else {
+        maxLen = maxStr.length
+      }
+
+      // 如果是0,2,3,7,8项直接插入100，百分数
+      if (
+        this.sign === 0
+        || this.sign === 2
+        || this.sign === 3
+        || this.sign === 7
+        || this.sign === 8
+      ) {
+        console.log('maxLen', maxLen)
+        // 在第一个位置插入100
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.splice(0, 0, 100)
+        return newArr
+      }
+      if (maxLen === 1) {
+        // 在第一个位置插入10
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.splice(0, 0, 10)
+        return newArr
+      }
+
+      if (maxLen === 2) {
+        // 在第一个位置插入100
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.splice(0, 0, 100)
+        return newArr
+      }
+
+      if (maxLen === 3) {
+        // 在第一个位置插入200
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.splice(0, 0, 200)
+        return newArr
+      }
+    }
+
+    /**
      * 配置项
      */
     this.option = {
@@ -138,8 +193,8 @@ export default {
       grid: {
         left: 0,
         right: 0,
-        top: 0,
-        bottom: 15
+        top: -40,
+        bottom: 0
       },
       xAxis: [
         {
@@ -170,7 +225,8 @@ export default {
           inverse: true,
           axisLabel: {
             show: false
-          }
+          },
+          barMinHeight: 100
         },
         {
           type: 'category',
@@ -178,6 +234,7 @@ export default {
           axisTick: 'none',
           axisLine: 'none',
           show: true,
+          barMinHeight: 100,
           axisLabel: {
             inside: true,
             verticalAlign: 'bottom',
@@ -244,7 +301,7 @@ export default {
               return value
             }
           },
-          data: dataTop[this.sign]
+          data: this.fingureData('top')
         }
       ],
       series: [
@@ -252,7 +309,7 @@ export default {
           show: true,
           name: '',
           type: 'bar',
-          data: dataTop[this.sign],
+          data: this.fingureData('top'),
           barWidth: 6, // 柱子宽度
           showBackground: true,
           backgroundStyle: {
@@ -272,8 +329,8 @@ export default {
       grid: {
         left: 0,
         right: 0,
-        top: 0,
-        bottom: 15
+        top: -40,
+        bottom: 0
       },
       xAxis: [
         {
@@ -357,6 +414,16 @@ export default {
               }
 
               if (
+                value === '10.42'
+                || value === '10.43'
+                || value === '10.88'
+                || value === '14.87'
+                || value === '9.01'
+              ) {
+                return value + ' %'
+              }
+
+              if (
                 value === '47.71'
                 || value === '47.74'
                 || value === '39.01'
@@ -368,7 +435,7 @@ export default {
               return value
             }
           },
-          data: dataDown[this.sign]
+          data: this.fingureData('down')
         }
       ],
 
@@ -377,7 +444,7 @@ export default {
           show: true,
           name: '',
           type: 'bar',
-          data: dataDown[this.sign],
+          data: this.fingureData('down'),
           barWidth: 6, // 柱子宽度
           showBackground: true,
           backgroundStyle: {
@@ -403,10 +470,10 @@ export default {
       // 更新数据
       ++this.sign
       if (this.sign < 9) {
-        this.option.series[0].data = dataTop[this.sign]
-        this.option.yAxis[1].data = dataTop[this.sign]
-        this.optionD.series[0].data = dataDown[this.sign]
-        this.optionD.yAxis[1].data = dataDown[this.sign]
+        this.option.series[0].data = this.fingureData('top')
+        this.option.yAxis[1].data = this.fingureData('top')
+        this.optionD.series[0].data = this.fingureData('down')
+        this.optionD.yAxis[1].data = this.fingureData('down')
       } else {
         this.sign = 0
       }
@@ -419,8 +486,11 @@ export default {
      * 初始化
      */
     init() {
-      this.myChartTopFive.clear()
-      this.myChartDownFive.clear()
+      if (this.myChartDownFive && this.myChartTopFive) {
+        this.myChartTopFive.clear()
+        this.myChartDownFive.clear()
+      }
+
       this.myChartTopFive.setOption(this.option, true)
       this.myChartDownFive.setOption(this.optionD, true)
     },
@@ -504,7 +574,7 @@ export default {
 
 .top-ranking-dec {
   position: absolute;
-  top: 176px;
+  top: 183px;
 }
 
 .top-ranking-dec p {
@@ -514,7 +584,7 @@ export default {
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 23px;
 
   span {
     font-family: Microsoft YaHei;
@@ -530,7 +600,7 @@ export default {
 
 .down-ranking-dec {
   position: absolute;
-  top: 434px;
+  top: 440px;
 }
 .down-ranking-dec p {
   font-family: Microsoft YaHei;
