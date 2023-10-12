@@ -9,18 +9,22 @@
     <div class="statistic">
       <div>
         <p class="font16">全量投诉</p>
-        <p class="font32">{{ complaintsFull }}件</p>
+        <p class="font32">
+          <CountTo :start-val="complaintsFull" :end-val="complaintsFullEnd" :duration="2000"></CountTo>件
+        </p>
         <p>
           <span class="font16">今日投诉(实时)</span>
-          {{ complaintsFullToday }}件
+          <CountTo :start-val="complaintsFullToday" :end-val="complaintsFullTodayEnd" :duration="2000"></CountTo>件
         </p>
       </div>
       <div>
         <p class="font16">监管转办投诉</p>
-        <p class="font32">{{ complaintReferral }}件</p>
+        <p class="font32">
+          <CountTo :start-val="complaintReferral" :end-val="complaintReferralEnd" :duration="2000"></CountTo>件
+        </p>
         <p>
           <span class="font16">今日投诉(实时)</span>
-          {{ complaintReferralToday }}件
+          <CountTo :start-val="complaintReferralToday" :end-val="complaintReferralTodayEnd" :duration="2000"></CountTo>件
         </p>
       </div>
       <div>
@@ -39,17 +43,23 @@
 
 <script>
 import * as dayjs from 'dayjs'
+import CountTo from './count-to';
 export default {
+  components: { CountTo },
   data() {
     const week = ['日', '一', '二', '三', '四', '五', '六'];
     return {
       date: dayjs().format('MM月DD日'),
       week: week[dayjs().day()],
       time: dayjs().format('HH:mm:ss'),
-      complaintsFull: this.random(100000000),
-      complaintsFullToday: this.random(1000),
-      complaintReferral: this.random(100000000),
-      complaintReferralToday: this.random(1000),
+      complaintsFull: 0,
+      complaintsFullEnd: 221896,
+      complaintsFullToday: 0,
+      complaintsFullTodayEnd: 2000,
+      complaintReferral: 0,
+      complaintReferralEnd: 27010,
+      complaintReferralToday: 0,
+      complaintReferralTodayEnd: 200,
     }
   },
   mounted() {
@@ -58,19 +68,23 @@ export default {
     }, 1000);
     setInterval(() => {
       this.refresh()
-    }, 3000);
+    }, 5000);
   },
   methods: {
     clock() {
       this.time = dayjs().format('HH:mm:ss');
     },
     refresh() {
-      const num1 = this.random(10);
       const num2 = this.random(10);
-      this.complaintsFull += num1;
-      this.complaintsFullToday += num1;
-      this.complaintReferral += num2;
-      this.complaintReferralToday += num2;
+      const num1 = this.random(10) + num2;
+      this.complaintsFull = this.complaintsFullEnd;
+      this.complaintsFullEnd += num1;
+      this.complaintsFullToday = this.complaintsFullTodayEnd;
+      this.complaintsFullTodayEnd += num1;
+      this.complaintReferral = this.complaintReferralEnd;
+      this.complaintReferralEnd += num2;
+      this.complaintReferralToday = this.complaintReferralTodayEnd;
+      this.complaintReferralTodayEnd += num2;
     },
     random(times) {
       return Math.floor(Math.random() * times + 1)

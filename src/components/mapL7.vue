@@ -3,24 +3,26 @@
     <div id="mapL7" v-loading="mapLoading"></div>
     <img id="rotate-icon" class="rotate-icon" v-show="showRotateIcon" src="@/assets/image/rotate.png" />
     <div class="lenged">
-      <div>
+      <div class="lenged-title">
         <div class="lenged-item"><span></span></div>
         <div class="lenged-item lenged-item-label">监管转办投诉占全量投诉比值的排名：</div>
       </div>
-      <div class="lenged-item move-top">
-        <p class="blue"></p><span v-if="companySumScale[0]">0</span>
-      </div>
-      <div class="lenged-item move-top">
-        <p class="green"></p><span>{{ companySumScale[0] }}</span>
-      </div>
-      <div class="lenged-item move-top">
-        <p class="yellow"></p><span>{{ companySumScale[1] }}</span>
-      </div>
-      <div class="lenged-item move-top">
-        <p class="orange"></p><span>{{ companySumScale[2] }}</span>
-      </div>
-      <div class="lenged-item move-top">
-        <p class="red"></p><span>{{ companySumScale[3] }}</span>
+      <div class="lenged-items">
+        <div class="lenged-item move-top">
+          <p class="blue"></p><span>第1~5名</span>
+        </div>
+        <div class="lenged-item move-top">
+          <p class="green"></p><span>第6~15名</span>
+        </div>
+        <div class="lenged-item move-top">
+          <p class="yellow"></p><span>第16~25名</span>
+        </div>
+        <div class="lenged-item move-top">
+          <p class="orange"></p><span>第26~36名</span>
+        </div>
+        <div class="lenged-item move-top">
+          <p class="red"></p><span>第37~44名</span>
+        </div>
       </div>
     </div>
   </div>
@@ -30,6 +32,7 @@ import $ from 'jquery';
 import { Marker, MarkerLayer } from '@antv/l7';
 import { Choropleth } from '@antv/l7plot';
 import { parseElement, parseQuery } from '@/lib/utils'
+import { mapData } from './mapL7Data'
 const rotateIcon = require('@/assets/image/rotate.png')
 const dirllMap = {
   country: ['province', 'city', 'district'],
@@ -38,6 +41,7 @@ const dirllMap = {
   district: []
 }
 let tooltipsData = {}
+
 export default {
   name: 'mapL7',
   data() {
@@ -84,7 +88,7 @@ export default {
       dirllStep: ['province', 'city', 'district'],
       moduleLoopFinished: false, // 周边模块是否循环完成
       loopAreaFinished: false, // 当前层级的行政区是否循环完成
-      companySumScale: [5, 15, 25, 35, 41], // 企业数量比例尺,
+      companySumScale: [5, 15, 25, 36, 50], // 企业数量比例尺,
       loop: this.$route.query.loop || true,
     }
   },
@@ -101,30 +105,10 @@ export default {
       this.destroyScence()
       this.initLevel = initLevel
       this.dirllStep = dirllMap[initLevel]
-      const mapdata = [{
-        // adcode: 410000,
-        name: '河南省',
-        value: 200,
-        center: [
-          113.753094,
-          34.767052
-        ],
-      },
-      {
-        // adcode: 100000,
-        name: '长沙市',
-        value: 100,
-        center: [112.938882, 28.228304],
-      }, {
-        // adcode: 100000,
-        name: '张家界',
-        value: 100,
-        center: [110.478887, 29.117343],
-      }]
       $.getJSON(url, data => {
         this.currentChoroplethData[initLevel] = data
         // 初始化地图
-        this.choropleth = new Choropleth('mapL7', this.getOptions(mapdata));
+        this.choropleth = new Choropleth('mapL7', this.getOptions(mapData));
         this.markerLayer = new MarkerLayer({});
         this.choropleth.on('loaded', () => {
           const maps = document.querySelector('.amap-maps')
@@ -139,7 +123,7 @@ export default {
           // 去掉轮廓线
           this.choropleth.scene?.map.setFeatures([]);
           setTimeout(() => {
-            this.setMarker(mapdata)
+            this.setMarker(mapData)
           }, 1000);
         });
       })
@@ -203,8 +187,11 @@ export default {
     // 绘制散点
     setMarker(nodes) {
       this.choropleth.scene?.removeAllMakers?.();
-      for (let i = 0; i < nodes.length; i++) {
-        const { center, lng, lat } = nodes[i];
+      for (let i = nodes.length - 1; i >= 0; i--) {
+        let { center } = nodes[i];
+        center = center.split(',')
+        const lng = Number(center[0])
+        const lat = Number(center[1])
         const icon = document.createElement('div')
         const className = this.setCircle(i)
         icon.className = 'marker1 marker' + className
@@ -212,8 +199,8 @@ export default {
           element: icon,
           anchor: 'center'
         }).setLnglat({
-          lng: lng || center[0],
-          lat: lat || center[1]
+          lng,
+          lat
         });
         this.markerLayer.addMarker(marker);
       }
@@ -226,8 +213,8 @@ export default {
         if (!skipProvince.includes(nodes[times]?.name)) {
           times = times < nodes.length ? times : 0;
           if (this.currentChoroplethData.country.features) {
-            this.setRotateMarker(nodes[times])
             tooltipsData = nodes[times];
+            this.setRotateMarker(nodes[times])
             this.times = times
           }
         }
@@ -290,62 +277,62 @@ export default {
           <ul class="ul">
             <li class="li">
               <div class="li-left">全量投诉</div>
-              <div class="li-right">${data.gdp || '--'} 件</div>
+              <div class="li-right">${data.data1 || '--'} 件</div>
             </li>
             <li class="li">
               <div class="li-left">监管转办投诉</div>
-              <div class="li-right">${data.gdpZs || '--'} 件</div>
+              <div class="li-right">${data.data2 || '--'} 件</div>
             </li>
             <li class="li">
               <div class="li-left">多元方式化解投诉</div>
-              <div class="li-right">${data.companySum || '--'} 件</div>
+              <div class="li-right">${data.data3 || '--'} 件</div>
             </li>
           </ul>
           <ul class="ul ul-order">
             <li class="li">
               <div class="li-left">15日办结率</div>
-              <div class="li-right">${data.gdp || '--'}%</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${(data.data4 * 100).toFixed(2) || '--'}%</div>
+              <div class="li-order">第${data.data5 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">平均处理期限</div>
-              <div class="li-right">${data.gdp || '--'}天</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${data.data6.toFixed(2) || '--'}天</div>
+              <div class="li-order">第${data.data7 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每网点投诉</div>
-              <div class="li-right">${data.gdp || '--'} 件</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${data.data8.toFixed(2) || '--'} 件</div>
+              <div class="li-order">第${data.data9 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每百万客户投诉</div>
-              <div class="li-right">${data.gdp || '--'}件</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${data.data10.toFixed(2) || '--'}件</div>
+              <div class="li-order">第${data.data11 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每百亿资产投诉</div>
-              <div class="li-right">${data.gdp || '--'}件</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${data.data12.toFixed(2) || '--'}件</div>
+              <div class="li-order">第${data.data13 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">升级投诉率</div>
-              <div class="li-right">${data.gdp || '--'}%</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${(data.data14 * 100).toFixed(2) || '--'}%</div>
+              <div class="li-order">第${data.data15 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">反复投诉率</div>
-              <div class="li-right">${data.gdp || '--'}%</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${(data.data16 * 100).toFixed(2) || '--'}%</div>
+              <div class="li-order">第${data.data17 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">多元方式化解投诉比率</div>
-              <div class="li-right">${data.gdp || '--'}%</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${(data.data18 * 100).toFixed(2) || '--'}%</div>
+              <div class="li-order">第${data.data19 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">客户满意度</div>
-              <div class="li-right">${data.gdp || '--'}%</div>
-              <div class="li-order">第${data.gdp || '--'}名</div>
+              <div class="li-right">${(data.data20 * 100).toFixed(2) || '--'}%</div>
+              <div class="li-order">第${data.data21 || '--'}名</div>
             </li>
           </ul>
         </div>`
@@ -366,13 +353,17 @@ export default {
       return 1
     },
     setRotateMarker(node) {
-      const { center, lng, lat, name, adcode } = node;
+      const { name, adcode } = node;
+      let { center } = node;
+      center = center.split(',')
+      const lng = Number(center[0])
+      const lat = Number(center[1])
       if ((lng && lat) || center) {
         const icon = this.createRotateIcon()
         if (this.markerRotate) {
           this.markerRotate = this.markerRotate.setLnglat({
-            lng: lng || center[0],
-            lat: lat || center[1]
+            lng,
+            lat
           });
         } else {
           this.markerRotate = new Marker({
@@ -380,8 +371,8 @@ export default {
             anchor: 'center',
             offsets: [-22, 22]
           }).setLnglat({
-            lng: lng || center[0],
-            lat: lat || center[1]
+            lng,
+            lat
           });
           this.markerLayer.addMarker(this.markerRotate);
           this.choropleth.scene?.addMarkerLayer(this.markerLayer);
@@ -390,8 +381,8 @@ export default {
         if (this.choropleth.tooltip) {
           this.choropleth.tooltip.updateTooltip({
             lngLat: {
-              lng: lng || center[0],
-              lat: lat || center[1]
+              lng,
+              lat
             },
           }, {
             items: [
@@ -441,7 +432,7 @@ export default {
 #mapL7 {
   text-align: left;
   position: relative;
-  top: -36px;
+  top: -50px;
   z-index: 1;
   // transform: scale(1.2);
   transform-origin: 50% 50%;
@@ -452,22 +443,26 @@ export default {
   /deep/ .amap-maps {
     background: #071531;
   }
+  /deep/ .el-loading-spinner{
+    top: 35%;
+  }
 }
 
 .lenged {
   position: absolute;
-  top: 88%;
+  top: 80%;
   left: 20px;
   z-index: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   gap: 14px;
 
   &-item {
     text-align: left;
 
     p {
-      width: 40px;
+      width: 50px;
       height: 4px;
       margin-bottom: 5px;
     }
@@ -499,25 +494,44 @@ export default {
       transform: matrix(0.99, 0, -0.15, 1, 0, 0);
     }
   }
+  &-items {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
+    span {
+      font-size: 12px;
+      display: inline-block;
+      -webkit-transform: scale(0.83);
+      transform: scale(0.83);
+      transform-origin: 0 0;
+    }
+  }
   .move-top {
     position: relative;
     top: 6px;
+    text-align: center;
   }
 
-  &-item:first-child {
-    // box-sizing: border-box;
-    width: 12px;
-    height: 12px;
-    background: rgba(255, 210, 51, 0.5);
-    border: 2px solid #FFFFFF;
-    border-radius: 50%;
-  }
+  &-title {
+    display: flex;
+    align-items: center;
 
-  &-item-label {
-    font-weight: 700;
-    font-size: 14px;
-    color: #D1E2FF;
+    .lenged-item:first-child {
+      margin-right: 20px;
+      // box-sizing: border-box;
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 210, 51, 0.5);
+      border: 2px solid #FFFFFF;
+      border-radius: 50%;
+    }
+
+    .lenged-item-label {
+      font-weight: 700;
+      font-size: 14px;
+      color: #D1E2FF;
+    }
   }
 }
 
@@ -620,7 +634,7 @@ export default {
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, #08A5CE 0%, #A7EDFF 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0px 0px 30px 20px rgba(36, 234, 167, 0.5);
+  box-shadow: 0px 0px 30px 10px rgba(36, 234, 167, 0.5);
 }
 
 /deep/.marker2 {
@@ -629,7 +643,7 @@ export default {
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, #09CEA9 0%, #09BCB9 40.1%, #8CE7FF 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0px 0px 30px 20px rgba(36, 234, 167, 0.5);
+  box-shadow: 0px 0px 30px 10px rgba(36, 234, 167, 0.5);
 }
 
 /deep/.marker3 {
@@ -638,7 +652,7 @@ export default {
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, #FFE600 0%, #FFE708 45.31%, #FFFFFF 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0px 0px 30px 20px rgba(36, 234, 167, 0.5);
+  box-shadow: 0px 0px 30px 10px rgba(36, 234, 167, 0.5);
 }
 
 /deep/.marker4 {
@@ -647,7 +661,7 @@ export default {
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, #FA8C16 0%, #FCAB0E 61.46%, #FFF277 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0px 0px 30px 20px rgba(36, 234, 167, 0.7)
+  box-shadow: 0px 0px 30px 10px rgba(36, 234, 167, 0.7)
 }
 
 /deep/.marker5 {
@@ -656,7 +670,7 @@ export default {
   border-radius: 50%;
   background: radial-gradient(50% 50% at 50% 50%, rgba(251, 63, 34, 0.8) 0%, rgba(251, 94, 29, 0.8) 55.21%, rgba(253, 159, 33, 0.8) 89.58%);
   border: 1.5px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 0px 30px 20px rgba(36, 234, 167, 0.7);
+  box-shadow: 0px 0px 30px 10px rgba(36, 234, 167, 0.7);
 }
 
 #rotate-icon {
