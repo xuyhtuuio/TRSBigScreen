@@ -24,7 +24,7 @@
         </el-col>
         <el-col :span="8">
           <div :class="{ active: isActived(4), default: !isActived(4) }">
-            每网点投诉率
+            每网点投诉
           </div>
         </el-col>
         <el-col :span="8">
@@ -49,14 +49,15 @@
         </el-col>
       </el-row>
     </div>
+
     <div class="ranking-title">前五名</div>
     <div id="ranking-topfive" class="ranking-outter"></div>
     <div class="top-ranking-dec">
-      <p><span>NO.1</span>乌鲁木齐分行</p>
-      <p><span>NO.2</span>广东分行</p>
-      <p><span>NO.3</span>上海分行</p>
-      <p><span>NO.4</span>北京分行</p>
-      <p><span>NO.5</span>浙江分行</p>
+      <p><span>NO.1</span>北京分行</p>
+      <p><span>NO.2</span>长春分行</p>
+      <p><span>NO.3</span>长沙分行</p>
+      <p><span>NO.4</span>成都分行</p>
+      <p><span>NO.5</span>重庆分行</p>
     </div>
     <div class="bottom-area">
       <div class="ranking-title">后五名</div>
@@ -64,11 +65,11 @@
     </div>
 
     <div class="down-ranking-dec">
-      <p><span>NO.37</span>湖南分行</p>
-      <p><span>NO.38</span>云南分行</p>
-      <p><span>NO.39</span>广西分行</p>
-      <p><span>NO.40</span>江西分行</p>
-      <p><span>NO.41</span>山东分行</p>
+      <p><span>NO.43</span>西安分行</p>
+      <p><span>NO.44</span>西宁分行</p>
+      <p><span>NO.45</span>烟台分行</p>
+      <p><span>NO.46</span>银川分行</p>
+      <p><span>NO.47</span>郑州分行</p>
     </div>
   </div>
 </template>
@@ -81,7 +82,7 @@ export default {
       optionD: null,
       sign: 0,
       myChartTopFive: null,
-      myChartDownFive: null,
+      myChartDownFive: null
     }
   },
   mounted() {
@@ -99,26 +100,32 @@ export default {
      * 模拟数据
      */
     const dataTop = [
-      [29.33, 15.22, 93.11, 27.33, 24.22],
-      [89.45, 45.21, 13.22, 77.78, 56.12],
-      [43.21, 88.94, 24.89, 99.67, 75.33],
-      [32.32, 68.11, 92.32, 61.56, 47.92],
-      [55.56, 16.12, 99.22, 76.32, 71.23],
-      [36.12, 52.93, 99.89, 14.67, 63.92],
-      [87.41, 41.29, 22.38, 99.56, 67.12],
-      [58.29, 76.31, 25.39, 49.12, 91.49],
-      [62.22, 29.78, 81.23, 74.46, 38.16]
+      [98, 96.65, 92.21, 92.56, 94.45],
+      [1.38, 2.14, 2.54, 2.11, 1.76],
+      [9.87, 11.31, 8.41, 9.12, 8],
+      [6.45, 7.12, 5, 8, 2.3],
+      [89.12, 114.17, 103.49, 142.48, 138.44],
+      [200.53, 199.8, 194.05, 178.1, 173.05],
+      [114.59, 114.17, 110.89, 101.77, 98.89],
+      [22.63, 9.85, 16.52, 12.3, 11.4],
+      [57.11, 63.56, 72.77, 63.31, 45.5]
     ]
+
     const dataDown = [
-      [93.11, 75.22, 23.89, 27.12, 56.92],
-      [41.59, 68.78, 37.28, 94.12, 27.26],
-      [62.22, 19.95, 45.29, 99.37, 31.94],
-      [98.18, 51.21, 24.32, 36.21, 66.83],
-      [97.67, 57.29, 13.33, 48.37, 73.23],
-      [26.29, 99.22, 63.19, 39.36, 58.78],
-      [33.12, 12.21, 75.34, 22.41, 97.53],
-      [69.29, 42.18, 99.78, 17.23, 54.19],
-      [76.11, 28.32, 41.32, 95.49, 67.13]
+      //
+      [96.68, 99.01, 98.99, 98.33, 94.76],
+      [2.85, 1.19, 2.2, 3.87, 3.44],
+      //
+      [11.3, 9.25, 8.9, 10.34, 11.9],
+      //
+      [7.36, 8.45, 9.6, 10.9, 11.2],
+      [74.84, 85.26, 81.97, 60.16, 54.95],
+      [84.2, 81.0, 77.88, 57.15, 54.95],
+      [48.11, 46.29, 44.5, 32.66, 31.4],
+      //
+      [10.42, 10.43, 10.88, 14.87, 9.01],
+      //
+      [47.71, 47.74, 39.01, 55.57, 46.61]
     ]
 
     /**
@@ -185,7 +192,56 @@ export default {
               fontFamily: 'Microsoft YaHei'
             },
             formatter(value) {
-              return value + ' %'
+              if (
+                value === '98'
+                || value === '96.65'
+                || value === '92.21'
+                || value === '92.56'
+                || value === '94.45'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '9.87'
+                || value === '11.31'
+                || value === '8.41'
+                || value === '9.12'
+                || value === '8'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '6.45'
+                || value === '7.12'
+                || value === '5'
+                || value === '8'
+                || value === '2.3'
+              ) {
+                return value + ' %'
+              }
+              if (
+                value === '22.63'
+                || value === '9.85'
+                || value === '16.52'
+                || value === '12.3'
+                || value === '11.4'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '57.11'
+                || value === '63.56'
+                || value === '72.77'
+                || value === '63.31'
+                || value === '45.5'
+              ) {
+                return value + ' %'
+              }
+
+              return value
             }
           },
           data: dataTop[this.sign]
@@ -202,7 +258,6 @@ export default {
           backgroundStyle: {
             color: '#1C1C34'
           },
-
           itemStyle: {
             barBorderRadius: [0, 20, 20, 0],
             color: '#09CEA9'
@@ -271,7 +326,47 @@ export default {
               fontFamily: 'Microsoft YaHei'
             },
             formatter(value) {
-              return value + ' %'
+              if (
+                value === '96.68'
+                || value === '99.01'
+                || value === '98.99'
+                || value === '98.33'
+                || value === '94.76'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '11.3'
+                || value === '9.25'
+                || value === '8.9'
+                || value === '10.34'
+                || value === '11.9'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '7.36'
+                || value === '8.45'
+                || value === '9.6'
+                || value === '10.9'
+                || value === '11.2'
+              ) {
+                return value + ' %'
+              }
+
+              if (
+                value === '47.71'
+                || value === '47.74'
+                || value === '39.01'
+                || value === '55.57'
+                || value === '46.61'
+              ) {
+                return value + ' %'
+              }
+
+              return value
             }
           },
           data: dataDown[this.sign]

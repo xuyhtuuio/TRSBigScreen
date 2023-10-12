@@ -58,12 +58,12 @@ export default {
     toThousands,
     initChart() {
       const data = [
-        { name: '信用卡', value: 1810, pre: '' },
-        { name: '借记卡', value: 1421, pre: '' },
-        { name: '个人贷款', value: 703, pre: '' },
-        { name: '理财类', value: 562, pre: '' },
-        { name: '其他零售', value: 521, pre: '' },
-        { name: '对公/小微', value: 491, pre: '' }
+        { name: '信用卡', value: 826506, pre: '' },
+        { name: '借记卡', value: 110741, pre: '' },
+        { name: '个人贷款', value: 1539570, pre: '' },
+        { name: '理财类', value: 148555, pre: '' },
+        { name: '其他零售', value: 48618, pre: '' },
+        { name: '对公/小微', value: 27010, pre: '' }
       ]
 
       const total = data.reduce((prev, cur) => {
@@ -262,6 +262,7 @@ export default {
 </script>
   <style lang="less" scoped>
 .supervise-transfer-cpmplaints {
+  min-width: 360px;
   .title-level2 {
     margin-top: 11px;
     color: #ffffff;
