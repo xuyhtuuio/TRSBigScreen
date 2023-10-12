@@ -155,7 +155,6 @@ export default {
         || this.sign === 7
         || this.sign === 8
       ) {
-        console.log('maxLen', maxLen)
         // 在第一个位置插入100
         const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
         newArr.splice(0, 0, 100)
@@ -574,7 +573,7 @@ export default {
 
 .top-ranking-dec {
   position: absolute;
-  top: 183px;
+  top: 188px;
 }
 
 .top-ranking-dec p {
@@ -600,7 +599,7 @@ export default {
 
 .down-ranking-dec {
   position: absolute;
-  top: 440px;
+  top: 445px;
 }
 .down-ranking-dec p {
   font-family: Microsoft YaHei;
