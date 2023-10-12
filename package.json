@@ -24,6 +24,7 @@
     "@antv/l7plot": "^0.3.3",
     "axios": "^0.21.4",
     "core-js": "^3.22.8",
+    "dayjs": "^1.11.10",
     "echarts": "^5.4.0",
     "element-ui": "2.15.6",
     "insert-css": "^2.0.0",

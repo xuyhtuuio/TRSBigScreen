@@ -16,18 +16,21 @@
     <div class="content">
       <div class="content-left">
         <p class="title-level1">
-          <span
-            >投诉指标<i>（2023年1月1日至今）</i></span
-          >
+          <span>投诉指标<i>（{{ today }}至今）</i></span>
         </p>
         <complaintIndicators />
       </div>
       <div class="content-center">
+        <p class="title-level1">
+          <span>投诉情况概览<i>（{{ today }}至今）</i></span>
+        </p>
+        <Statistics ref="statistics"></Statistics>
+        <MapL7 ref="mapL7"></MapL7>
         <img class="center-rotate-point" src="@/assets/image/center-rotate-point.png" />
       </div>
       <div class="content-right">
         <p class="title-level1">
-          <span>排行榜<i>（2023年1月1日至今）</i></span>
+          <span>排行榜<i>（{{ today }}至今）</i></span>
         </p>
         <rankingList />
       </div>
@@ -35,13 +38,13 @@
     <div class="bottom">
       <div class="bottom-item">
         <p class="title-level1 title-level1_1">
-          <span>不同业务投诉情况<i>（2023年1月1日至今）</i></span>
+          <span>不同业务投诉情况<i>（{{ today }}至今）</i></span>
         </p>
         <BusinessComplaintStatus></BusinessComplaintStatus>
       </div>
       <div class="bottom-item">
         <p class="title-level1 title-level1_1">
-          <span>总行来访投诉处理情况<i>（2023年1月1日至今）</i></span>
+          <span>总行来访投诉处理情况<i>（{{ today }}至今）</i></span>
         </p>
         <VisitingComplaintStatus></VisitingComplaintStatus>
       </div>
@@ -53,14 +56,26 @@ import complaintIndicators from '@/views/complaintIndicators/index';
 import rankingList from '@/views/rankingList/index';
 import BusinessComplaintStatus from '@/views/business-complaint-status/index'
 import VisitingComplaintStatus from '@/views/visiting-complaint-status/index'
+import MapL7 from '../../components/mapL7';
+import Statistics from '../../components/statistics';
+// eslint-disable-next-line
+import * as dayjs from 'dayjs'
 export default {
-  components: { BusinessComplaintStatus, VisitingComplaintStatus, complaintIndicators, rankingList, },
+  components: {
+    BusinessComplaintStatus,
+    VisitingComplaintStatus,
+    complaintIndicators,
+    rankingList,
+    MapL7,
+    Statistics
+  },
   data() {
     return {
       publicPath: process.env.BASE_URL,
+      today: dayjs().format('YYYY年MM月DD日')
     };
   },
-  created() {},
+  created() { },
   watch: {},
   methods: {},
 };
@@ -104,6 +119,7 @@ export default {
     margin: 8px 25px 25px;
     height: 662px;
     display: flex;
+
     .content-left {
       width: 362px;
     }
@@ -117,6 +133,7 @@ export default {
 
   .content-center {
     flex: 1;
+    padding: 0 16px;
   }
 
   .bottom {
@@ -125,9 +142,11 @@ export default {
     position: relative;
     z-index: 10000;
     display: flex;
+
     .bottom-item {
       flex: 1;
     }
+
     .bottom-item:first-of-type {
       margin-right: 16px;
       flex: 1.26;
@@ -159,7 +178,7 @@ export default {
     line-height: 30px;
     color: #ffffff;
 
-    span + span {
+    span+span {
       font-size: 36px;
       background: linear-gradient(180deg, #fff0df 0%, #ccd7ff 100%);
       -webkit-background-clip: text;
@@ -171,11 +190,9 @@ export default {
       &::before {
         content: "|";
         padding: 0 16px;
-        background: linear-gradient(
-          90deg,
-          rgba(58, 144, 206, 0.5) -0.21%,
-          rgba(58, 144, 206, 0) 107%
-        );
+        background: linear-gradient(90deg,
+            rgba(58, 144, 206, 0.5) -0.21%,
+            rgba(58, 144, 206, 0) 107%);
         font-size: 24px;
       }
     }
@@ -199,8 +216,8 @@ export default {
     position: absolute;
     z-index: -1;
     width: 55%;
-    top: 8%;
-    left: 20%;
+    top: 16%;
+    left: 25%;
     -webkit-animation: gif 12s infinite linear;
     animation: gif 12s infinite linear;
   }
@@ -219,14 +236,15 @@ export default {
   text-align: left;
   background: url("../../assets/image/title-bg.png");
   background-size: 100% 100%;
-  i{
+
+  i {
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
   }
 
   &.title-level1_1 {
-    background-repeat:no-repeat ;
+    background-repeat: no-repeat;
     background-size: 100% 100% !important;
     background: url('../../assets/image/title-bg-1.png');
   }
@@ -236,7 +254,7 @@ export default {
     background: url("../../assets/image/title-bg-1.png");
   }
 
-  > span {
+  >span {
     position: relative;
     z-index: 10;
   }
@@ -290,14 +308,12 @@ export default {
 
   50% {
     opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
-      translate3d(50px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(50px, 0px, 0px);
   }
 
   100% {
     opacity: 0;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
-      translate3d(100px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(100px, 0px, 0px);
   }
 }
 
@@ -309,14 +325,12 @@ export default {
 
   50% {
     opacity: 1;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
-      translate3d(100px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(100px, 0px, 0px);
   }
 
   100% {
     opacity: 0;
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1)
-      translate3d(200px, 0px, 0px);
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scaleX(1) scaleY(1) translate3d(200px, 0px, 0px);
   }
 }
 

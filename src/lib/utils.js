@@ -170,3 +170,25 @@ export function parseQuery(_this) {
 export function toThousands(num) {
   return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 }
+export function formatterProvince(areaValue) {
+  if (!areaValue) {
+    return '';
+  }
+  // 只处理省份，如果市直辖市或地级市直接返回
+  if (areaValue.endsWith('市')) {
+    return areaValue
+  }
+  let province = ''
+  if (areaValue.includes('内蒙古') || areaValue.includes('黑龙江')) {
+    province = areaValue.slice(0, 3)
+  } else {
+    province = areaValue.slice(0, 2)
+  }
+  return province
+}
+/* 字符串解析成元素节点类型 */
+export function parseElement(str) {
+  const o = document.createElement('div');
+  o.innerHTML = str;
+  return o.childNodes;
+}
