@@ -365,13 +365,13 @@ export default {
               ) {
                 return value + ' %'
               }
-
               return value
             }
           },
           data: dataDown[this.sign]
         }
       ],
+
       series: [
         {
           show: true,
@@ -401,7 +401,7 @@ export default {
      */
     setInterval(() => {
       // 更新数据
-      this.sign++
+      ++this.sign
       if (this.sign < 9) {
         this.option.series[0].data = dataTop[this.sign]
         this.option.yAxis[1].data = dataTop[this.sign]
