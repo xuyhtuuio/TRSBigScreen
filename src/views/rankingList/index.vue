@@ -129,7 +129,7 @@ export default {
     ]
 
     /**
-     * 动态的计算出最接近的刻度值
+     * 动态的计算出最接近的刻度值，自定义刻度
      */
     this.fingureData = (to) => {
       const max = Math.max(...dataTop[this.sign])
@@ -611,7 +611,7 @@ export default {
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 23px;
 
   span {
     font-family: Microsoft YaHei;
