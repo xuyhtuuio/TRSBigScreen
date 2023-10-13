@@ -72,7 +72,8 @@ export default {
   data() {
     return {
       publicPath: process.env.BASE_URL,
-      today: dayjs().format('YYYY年MM月DD日')
+      // today: dayjs().format('YYYY年MM月DD日')
+      today: '2023年1月1日'
     };
   },
   created() { },
