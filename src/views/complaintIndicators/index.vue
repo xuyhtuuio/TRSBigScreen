@@ -92,8 +92,8 @@
 export default {
   data() {
     return {
-      bank_num: this.random(3000),
-      complaint_num: this.random(3000)
+      bank_num: 2000,
+      complaint_num: 2000
     }
   },
   created() {},
