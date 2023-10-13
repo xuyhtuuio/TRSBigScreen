@@ -110,15 +110,6 @@ export default {
      */
     this.init()
 
-    this.AssignmentData = () => {
-      const topData = this.fingureData('top')
-      const downData = this.fingureData('down')
-
-      this.getTopOption().series[0].data = topData
-      this.getTopOption().yAxis[1].data = topData
-      this.getDownOption().series[0].data = downData
-      this.getDownOption().yAxis[1].data = downData
-    }
     /**
      * 每隔5秒钟刷新一次数据
      */
@@ -126,7 +117,6 @@ export default {
       // 更新数据
       ++this.sign
       this.sign === 9 ? (this.sign = 0) : this.sign
-      this.AssignmentData()
       this.init()
     }, 5000)
   },
@@ -153,12 +143,11 @@ export default {
     /**
      * 动态的计算出最接近的刻度值，自定义刻度
      */
-    fingureData(to) {
-      const max = Math.max(...dataTop[this.sign])
-      const maxD = Math.max(...dataDown[this.sign])
+    fingureData(target) {
+      const max = Math.max(...target)
       let maxLen = 0
       // 判断是几位数
-      const maxStr = to === 'top' ? max.toString() : maxD.toString()
+      const maxStr = max.toString()
       // 转换成数组
       const maxArr = maxStr.split('')
       if (maxArr.includes('.')) {
@@ -168,44 +157,25 @@ export default {
         maxLen = maxStr.length
       }
 
-      // 特殊情况
-      if ([0, 2, 3, 7, 8].includes(this.sign)) {
-        // 在第一个位置插入100
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.unshift(100)
+      const pushData = (value) => {
+        const newArr = [...target]
+        newArr.unshift(value)
         return newArr
       }
 
-      if ([4, 5, 6].includes(this.sign)) {
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.unshift(200)
-        return newArr
-      }
+      // 特殊情况
+      if ([0, 2, 3, 7, 8].includes(this.sign)) return pushData(100)
 
       // 通用情况
-      if (maxLen === 1) {
-        // 在第一个位置插入10
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.unshift(10)
-        return newArr
-      }
-
-      if (maxLen === 2) {
-        // 在第一个位置插入100
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.unshift(100)
-        return newArr
-      }
-
-      if (maxLen === 3) {
-        // 在第一个位置插入200
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.unshift(200)
-        return newArr
-      }
+      if (maxLen === 1) return pushData(10)
+      if (maxLen === 2) return pushData(100)
+      if (maxLen === 3) return pushData(200)
     },
 
     getOption(data, color, isInArr) {
+      let dataSeries = []
+      if (![1, 4, 5, 6].includes(this.sign)) dataSeries = data
+
       return {
         legend: {
           show: false
@@ -280,7 +250,7 @@ export default {
             show: true,
             name: '',
             type: 'bar',
-            data,
+            data: dataSeries,
             barWidth: 6, // 柱子宽度
             showBackground: true,
             backgroundStyle: {
@@ -296,53 +266,59 @@ export default {
     },
 
     getTopOption() {
-      return this.getOption(this.fingureData('top'), '#09CEA9', (value) => {
-        if (['99.1', '99.04', '99.01', '98.99', '98.87'].includes(value)) {
-          return value + ' %'
+      return this.getOption(
+        this.fingureData(dataTop[this.sign]),
+        '#09CEA9',
+        (value) => {
+          if (['99.1', '99.04', '99.01', '98.99', '98.87'].includes(value)) {
+            return value + ' %'
+          } else if (['15.3', '14.2', '13.21', '12.2', '12'].includes(value)) {
+            return value + ' %'
+          } else if (
+            ['11.52', '11.2', '10.9', '10.04', '10.03'].includes(value)
+          ) {
+            return value + ' %'
+          } else if (
+            ['23.5', '22.63', '21.11', '21.01', '19.42'].includes(value)
+          ) {
+            return value + ' %'
+          } else if (
+            ['72.77', '68.87', '63.56', '63.31', '60.18'].includes(value)
+          ) {
+            return value + ' %'
+          }
+          return value
         }
-
-        if (['15.3', '14.2', '13.21', '12.2', '12'].includes(value)) {
-          return value + ' %'
-        }
-
-        if (['11.52', '11.2', '10.9', '10.04', '10.03'].includes(value)) {
-          return value + ' %'
-        }
-
-        if (['23.5', '22.63', '21.11', '21.01', '19.42'].includes(value)) {
-          return value + ' %'
-        }
-
-        if (['72.77', '68.87', '63.56', '63.31', '60.18'].includes(value)) {
-          return value + ' %'
-        }
-        return value
-      })
+      )
     },
 
     getDownOption() {
-      return this.getOption(this.fingureData('down'), '#FB3F22', (value) => {
-        if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
-          return value + ' %'
-        }
+      return this.getOption(
+        this.fingureData(dataDown[this.sign]),
+        '#FB3F22',
+        (value) => {
+          if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
+            return value + ' %'
+          }
 
-        if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
-          return value + ' %'
-        }
+          if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
+            return value + ' %'
+          }
 
-        if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
-          return value + ' %'
-        }
+          if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
+            return value + ' %'
+          }
 
-        if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
-          return value + ' %'
-        }
+          if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
+            return value + ' %'
+          }
 
-        if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
-          return value + ' %'
+          if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
+            return value + ' %'
+          }
+          return value
         }
-        return value
-      })
+      )
     }
   }
 }
