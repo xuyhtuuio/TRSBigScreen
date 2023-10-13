@@ -2,49 +2,15 @@
   <div class="outter">
     <div class="top-area">
       <el-row :gutter="3" style="margin-left: 0px">
-        <el-col :span="6">
-          <div :class="{ active: isActived(0), default: !isActived(0) }">
-            15日办结率
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div :class="{ active: isActived(1), default: !isActived(1) }">
-            平均处理期限
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div :class="{ active: isActived(2), default: !isActived(2) }">
-            升级投诉率
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div :class="{ active: isActived(3), default: !isActived(3) }">
-            反复投诉率
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div :class="{ active: isActived(4), default: !isActived(4) }">
-            每网点投诉
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div :class="{ active: isActived(5), default: !isActived(5) }">
-            每百万客户投诉
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div :class="{ active: isActived(6), default: !isActived(6) }">
-            每百亿资产投诉
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div :class="{ active: isActived(7), default: !isActived(7) }">
-            多元方式化解投诉比率
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div :class="{ active: isActived(8), default: !isActived(8) }">
-            客户满意度
+        <el-col
+          v-for="(item, index) in complaintList"
+          :key="index"
+          :span="item.span"
+        >
+          <div
+            :class="{ active: isActived(index), default: !isActived(index) }"
+          >
+            {{ item.label }}
           </div>
         </el-col>
       </el-row>
@@ -53,11 +19,10 @@
     <div class="ranking-title">前五名</div>
     <div id="ranking-topfive" class="ranking-outter"></div>
     <div class="top-ranking-dec">
-      <p><span>NO.1</span>北京分行</p>
-      <p><span>NO.2</span>长春分行</p>
-      <p><span>NO.3</span>长沙分行</p>
-      <p><span>NO.4</span>成都分行</p>
-      <p><span>NO.5</span>重庆分行</p>
+      <p v-for="(item, index) in dataTopCity[sign]" :key="index">
+        <span>NO.{{ index + 1 }}</span
+        >{{ item }}
+      </p>
     </div>
     <div class="bottom-area">
       <div class="ranking-title">后五名</div>
@@ -65,16 +30,20 @@
     </div>
 
     <div class="down-ranking-dec">
-      <p><span>NO.43</span>西安分行</p>
-      <p><span>NO.44</span>西宁分行</p>
-      <p><span>NO.45</span>烟台分行</p>
-      <p><span>NO.46</span>银川分行</p>
-      <p><span>NO.47</span>郑州分行</p>
+      <p v-for="(item, index) in dataDownCity[sign]" :key="index">
+        <span>NO.{{ index + 40 }}</span
+        >{{ item }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import { getCityData } from './city'
+import { getCityValue } from './cityData'
+const { dataTopCity, dataDownCity } = getCityData()
+const { dataTop, dataDown } = getCityValue()
+
 export default {
   data() {
     return {
@@ -82,7 +51,47 @@ export default {
       optionD: null,
       sign: 0,
       myChartTopFive: null,
-      myChartDownFive: null
+      myChartDownFive: null,
+      complaintList: [
+        {
+          label: '15日办结率',
+          span: 6
+        },
+        {
+          label: '平均处理期限',
+          span: 6
+        },
+        {
+          label: '升级投诉率',
+          span: 6
+        },
+        {
+          label: '反复投诉率',
+          span: 6
+        },
+        {
+          label: '每网点投诉',
+          span: 8
+        },
+        {
+          label: '每百万客户投诉',
+          span: 8
+        },
+        {
+          label: '每百亿资产投诉',
+          span: 8
+        },
+        {
+          label: '多元方式化解投诉比率',
+          span: 12
+        },
+        {
+          label: '客户满意度',
+          span: 12
+        }
+      ],
+      dataTopCity,
+      dataDownCity
     }
   },
   mounted() {
@@ -97,375 +106,18 @@ export default {
     )
 
     /**
-     * 模拟数据
-     */
-    const dataTop = [
-      [98, 96.65, 92.21, 92.56, 94.45],
-      [1.38, 2.14, 2.54, 2.11, 1.76],
-      [9.87, 11.31, 8.41, 9.12, 8],
-      [6.45, 7.12, 5, 8, 2.3],
-      [89.12, 114.17, 103.49, 142.48, 138.44],
-      [200.53, 199.8, 194.05, 178.1, 173.05],
-      [114.59, 114.17, 110.89, 101.77, 98.89],
-      [22.63, 9.85, 16.52, 12.3, 11.4],
-      [57.11, 63.56, 72.77, 63.31, 45.5]
-    ]
-
-    const dataDown = [
-      //
-      [96.68, 99.01, 98.99, 98.33, 94.76],
-      [2.85, 1.19, 2.2, 3.87, 3.44],
-      //
-      [11.3, 9.25, 8.9, 10.34, 11.9],
-      //
-      [7.36, 8.45, 9.6, 10.9, 11.2],
-      [74.84, 85.26, 81.97, 60.16, 54.95],
-      [84.2, 81.0, 77.88, 57.15, 54.95],
-      [48.11, 46.29, 44.5, 32.66, 31.4],
-      //
-      [10.42, 10.43, 10.88, 14.87, 9.01],
-      //
-      [47.71, 47.74, 39.01, 55.57, 46.61]
-    ]
-
-    /**
-     * 动态的计算出最接近的刻度值，自定义刻度
-     */
-    this.fingureData = (to) => {
-      const max = Math.max(...dataTop[this.sign])
-      const maxD = Math.max(...dataDown[this.sign])
-      let maxLen = 0
-      // 判断是几位数
-      const maxStr = to === 'top' ? max.toString() : maxD.toString()
-      // 转换成数组
-      const maxArr = maxStr.split('')
-      if (maxArr.find((item) => item === '.')) {
-        // 说明是小数,截取.之前的数
-        maxLen = maxStr.split('.')[0].length
-      } else {
-        maxLen = maxStr.length
-      }
-
-      // 如果是0,2,3,7,8项直接插入100，百分数
-      if (
-        this.sign === 0
-        || this.sign === 2
-        || this.sign === 3
-        || this.sign === 7
-        || this.sign === 8
-      ) {
-        // 在第一个位置插入100
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.splice(0, 0, 100)
-        return newArr
-      }
-      if (maxLen === 1) {
-        // 在第一个位置插入10
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.splice(0, 0, 10)
-        return newArr
-      }
-
-      if (maxLen === 2) {
-        // 在第一个位置插入100
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.splice(0, 0, 100)
-        return newArr
-      }
-
-      if (maxLen === 3) {
-        // 在第一个位置插入200
-        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
-        newArr.splice(0, 0, 200)
-        return newArr
-      }
-    }
-
-    /**
-     * 配置项
-     */
-    this.option = {
-      legend: {
-        show: false
-      },
-      grid: {
-        left: 0,
-        right: 0,
-        top: -40,
-        bottom: 0
-      },
-      xAxis: [
-        {
-          splitLine: {
-            show: false
-          },
-          type: 'value',
-          show: false,
-          axisLine: {
-            // x轴坐标轴，false为隐藏，true为显示
-            show: false
-          }
-        }
-      ],
-      yAxis: [
-        {
-          show: true,
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          type: 'category',
-          axisTick: {
-            show: false
-          },
-          inverse: true,
-          axisLabel: {
-            show: false
-          },
-          barMinHeight: 100
-        },
-        {
-          type: 'category',
-          inverse: true,
-          axisTick: 'none',
-          axisLine: 'none',
-          show: true,
-          barMinHeight: 100,
-          axisLabel: {
-            inside: true,
-            verticalAlign: 'bottom',
-            lineHeight: 34,
-            margin: 5, // 刻度标签与轴线之间的距离
-            show: true,
-            textStyle: {
-              color: 'rgba(255, 255, 255, 1)',
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: 700,
-              fontFamily: 'Microsoft YaHei'
-            },
-            formatter(value) {
-              if (
-                value === '98'
-                || value === '96.65'
-                || value === '92.21'
-                || value === '92.56'
-                || value === '94.45'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '9.87'
-                || value === '11.31'
-                || value === '8.41'
-                || value === '9.12'
-                || value === '8'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '6.45'
-                || value === '7.12'
-                || value === '5'
-                || value === '8'
-                || value === '2.3'
-              ) {
-                return value + ' %'
-              }
-              if (
-                value === '22.63'
-                || value === '9.85'
-                || value === '16.52'
-                || value === '12.3'
-                || value === '11.4'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '57.11'
-                || value === '63.56'
-                || value === '72.77'
-                || value === '63.31'
-                || value === '45.5'
-              ) {
-                return value + ' %'
-              }
-
-              return value
-            }
-          },
-          data: this.fingureData('top')
-        }
-      ],
-      series: [
-        {
-          show: true,
-          name: '',
-          type: 'bar',
-          data: this.fingureData('top'),
-          barWidth: 6, // 柱子宽度
-          showBackground: true,
-          backgroundStyle: {
-            color: '#1C1C34'
-          },
-          itemStyle: {
-            barBorderRadius: [0, 20, 20, 0],
-            color: '#09CEA9'
-          }
-        }
-      ]
-    }
-    this.optionD = {
-      legend: {
-        show: false
-      },
-      grid: {
-        left: 0,
-        right: 0,
-        top: -40,
-        bottom: 0
-      },
-      xAxis: [
-        {
-          splitLine: {
-            show: false
-          },
-          type: 'value',
-          show: false,
-          axisLine: {
-            // x轴坐标轴，false为隐藏，true为显示
-            show: false
-          }
-        }
-      ],
-      yAxis: [
-        {
-          show: true,
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          type: 'category',
-          axisTick: {
-            show: false
-          },
-          inverse: true,
-          axisLabel: {
-            show: false
-          }
-        },
-        {
-          type: 'category',
-          inverse: true,
-          axisTick: 'none',
-          axisLine: 'none',
-          show: true,
-          axisLabel: {
-            inside: true,
-            verticalAlign: 'bottom',
-            lineHeight: 28,
-            margin: 5, // 刻度标签与轴线之间的距离
-            show: true,
-            textStyle: {
-              color: 'rgba(255, 255, 255, 1)',
-              fontSize: 14,
-              lineHeight: 20,
-              fontWeight: 700,
-              fontFamily: 'Microsoft YaHei'
-            },
-            formatter(value) {
-              if (
-                value === '96.68'
-                || value === '99.01'
-                || value === '98.99'
-                || value === '98.33'
-                || value === '94.76'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '11.3'
-                || value === '9.25'
-                || value === '8.9'
-                || value === '10.34'
-                || value === '11.9'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '7.36'
-                || value === '8.45'
-                || value === '9.6'
-                || value === '10.9'
-                || value === '11.2'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '10.42'
-                || value === '10.43'
-                || value === '10.88'
-                || value === '14.87'
-                || value === '9.01'
-              ) {
-                return value + ' %'
-              }
-
-              if (
-                value === '47.71'
-                || value === '47.74'
-                || value === '39.01'
-                || value === '55.57'
-                || value === '46.61'
-              ) {
-                return value + ' %'
-              }
-              return value
-            }
-          },
-          data: this.fingureData('down')
-        }
-      ],
-
-      series: [
-        {
-          show: true,
-          name: '',
-          type: 'bar',
-          data: this.fingureData('down'),
-          barWidth: 6, // 柱子宽度
-          showBackground: true,
-          backgroundStyle: {
-            color: '#1C1C34'
-          },
-          itemStyle: {
-            barBorderRadius: [0, 20, 20, 0],
-            color: '#FB3F22'
-          }
-        }
-      ]
-    }
-
-    /**
      * 初始化
      */
     this.init()
 
     this.AssignmentData = () => {
-      this.option.series[0].data = this.fingureData('top')
-      this.option.yAxis[1].data = this.fingureData('top')
-      this.optionD.series[0].data = this.fingureData('down')
-      this.optionD.yAxis[1].data = this.fingureData('down')
+      const topData = this.fingureData('top')
+      const downData = this.fingureData('down')
+
+      this.getTopOption().series[0].data = topData
+      this.getTopOption().yAxis[1].data = topData
+      this.getDownOption().series[0].data = downData
+      this.getDownOption().yAxis[1].data = downData
     }
     /**
      * 每隔5秒钟刷新一次数据
@@ -473,12 +125,8 @@ export default {
     setInterval(() => {
       // 更新数据
       ++this.sign
-      if (this.sign < 9) {
-        this.AssignmentData()
-      } else {
-        this.sign = 0
-        this.AssignmentData()
-      }
+      this.sign === 9 ? (this.sign = 0) : this.sign
+      this.AssignmentData()
       this.init()
     }, 5000)
   },
@@ -492,15 +140,209 @@ export default {
         this.myChartTopFive.clear()
         this.myChartDownFive.clear()
       }
-
-      this.myChartTopFive.setOption(this.option, true)
-      this.myChartDownFive.setOption(this.optionD, true)
+      this.myChartTopFive.setOption(this.getTopOption(), true)
+      this.myChartDownFive.setOption(this.getDownOption(), true)
     },
     /**
      * 根据sign判断是不是active
      */
     isActived(index) {
       return index === this.sign
+    },
+
+    /**
+     * 动态的计算出最接近的刻度值，自定义刻度
+     */
+    fingureData(to) {
+      const max = Math.max(...dataTop[this.sign])
+      const maxD = Math.max(...dataDown[this.sign])
+      let maxLen = 0
+      // 判断是几位数
+      const maxStr = to === 'top' ? max.toString() : maxD.toString()
+      // 转换成数组
+      const maxArr = maxStr.split('')
+      if (maxArr.includes('.')) {
+        // 说明是小数,截取.之前的数
+        maxLen = maxStr.split('.')[0].length
+      } else {
+        maxLen = maxStr.length
+      }
+
+      // 特殊情况
+      if ([0, 2, 3, 7, 8].includes(this.sign)) {
+        // 在第一个位置插入100
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.unshift(100)
+        return newArr
+      }
+
+      if ([4, 5, 6].includes(this.sign)) {
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.unshift(200)
+        return newArr
+      }
+
+      // 通用情况
+      if (maxLen === 1) {
+        // 在第一个位置插入10
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.unshift(10)
+        return newArr
+      }
+
+      if (maxLen === 2) {
+        // 在第一个位置插入100
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.unshift(100)
+        return newArr
+      }
+
+      if (maxLen === 3) {
+        // 在第一个位置插入200
+        const newArr = to === 'top' ? [...dataTop[this.sign]] : [...dataDown[this.sign]]
+        newArr.unshift(200)
+        return newArr
+      }
+    },
+
+    getOption(data, color, isInArr) {
+      return {
+        legend: {
+          show: false
+        },
+        grid: {
+          left: 0,
+          right: 0,
+          top: -40,
+          bottom: 0
+        },
+        xAxis: [
+          {
+            splitLine: {
+              show: false
+            },
+            type: 'value',
+            show: false,
+            axisLine: {
+              // x轴坐标轴，false为隐藏，true为显示
+              show: false
+            }
+          }
+        ],
+        yAxis: [
+          {
+            show: true,
+            splitLine: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            type: 'category',
+            axisTick: {
+              show: false
+            },
+            inverse: true,
+            axisLabel: {
+              show: false
+            },
+            barMinHeight: 100
+          },
+          {
+            type: 'category',
+            inverse: true,
+            axisTick: 'none',
+            axisLine: 'none',
+            show: true,
+            barMinHeight: 100,
+            axisLabel: {
+              inside: true,
+              verticalAlign: 'bottom',
+              lineHeight: 34,
+              margin: 5, // 刻度标签与轴线之间的距离
+              show: true,
+              textStyle: {
+                color: 'rgba(255, 255, 255, 1)',
+                fontSize: 14,
+                lineHeight: 20,
+                fontWeight: 700,
+                fontFamily: 'Microsoft YaHei'
+              },
+              formatter(value) {
+                return isInArr(value)
+              }
+            },
+            data
+          }
+        ],
+        series: [
+          {
+            show: true,
+            name: '',
+            type: 'bar',
+            data,
+            barWidth: 6, // 柱子宽度
+            showBackground: true,
+            backgroundStyle: {
+              color: '#1C1C34'
+            },
+            itemStyle: {
+              barBorderRadius: [0, 20, 20, 0],
+              color
+            }
+          }
+        ]
+      }
+    },
+
+    getTopOption() {
+      return this.getOption(this.fingureData('top'), '#09CEA9', (value) => {
+        if (['99.1', '99.04', '99.01', '98.99', '98.87'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['15.3', '14.2', '13.21', '12.2', '12'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['11.52', '11.2', '10.9', '10.04', '10.03'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['23.5', '22.63', '21.11', '21.01', '19.42'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['72.77', '68.87', '63.56', '63.31', '60.18'].includes(value)) {
+          return value + ' %'
+        }
+        return value
+      })
+    },
+
+    getDownOption() {
+      return this.getOption(this.fingureData('down'), '#FB3F22', (value) => {
+        if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
+          return value + ' %'
+        }
+
+        if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
+          return value + ' %'
+        }
+        return value
+      })
     }
   }
 }
