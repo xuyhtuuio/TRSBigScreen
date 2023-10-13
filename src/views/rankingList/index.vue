@@ -299,17 +299,19 @@ export default {
         '#FB3F22',
         (value) => {
           if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
-            return value + ' %';
+            return value + ' %'
           } else if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
-            return value + ' %';
+            return value + ' %'
           } else if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
-            return value + ' %';
+            return value + ' %'
           } else if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
-            return value + ' %';
-          } else if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
-            return value + ' %';
+            return value + ' %'
+          } else if (
+            ['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)
+          ) {
+            return value + ' %'
           } else {
-            return value;
+            return value
           }
         }
       )
@@ -351,7 +353,6 @@ export default {
     #1b3476 73.04%,
     #0d1e5f 100.57%
   );
-  font-family: Microsoft YaHei;
   font-size: 12px;
   font-weight: 700;
   line-height: 20px;
@@ -361,11 +362,9 @@ export default {
 
 .active {
   background: linear-gradient(90deg, #503d0d -8.61%, #91640e 60.82%);
-  font-family: Microsoft YaHei;
   font-size: 12px;
   font-weight: 700;
   line-height: 20px;
-  letter-spacing: 0em;
   text-align: center;
 }
 
@@ -379,11 +378,9 @@ export default {
   margin-bottom: 10px;
   padding-left: 20px;
   padding-top: 2px;
-  font-family: Microsoft YaHei;
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
-  letter-spacing: 0em;
 }
 
 .top-ranking-dec {
@@ -392,18 +389,14 @@ export default {
 }
 
 .top-ranking-dec p {
-  font-family: Microsoft YaHei;
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
-  letter-spacing: 0em;
   text-align: left;
   margin-bottom: 23px;
 
   span {
-    font-family: Microsoft YaHei;
     font-size: 12px;
-    font-weight: 700;
     line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
@@ -417,20 +410,15 @@ export default {
   top: 445px;
 }
 .down-ranking-dec p {
-  font-family: Microsoft YaHei;
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
-  letter-spacing: 0em;
   text-align: left;
   margin-bottom: 23px;
 
   span {
-    font-family: Microsoft YaHei;
     font-size: 12px;
-    font-weight: 700;
     line-height: 20px;
-    letter-spacing: 0em;
     text-align: left;
     color: #ffe600;
     margin-right: 10px;
