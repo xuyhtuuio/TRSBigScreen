@@ -286,8 +286,9 @@ export default {
             ['72.77', '68.87', '63.56', '63.31', '60.18'].includes(value)
           ) {
             return value + ' %'
+          } else {
+            return value
           }
-          return value
         }
       )
     },
@@ -298,25 +299,18 @@ export default {
         '#FB3F22',
         (value) => {
           if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
-            return value + ' %'
+            return value + ' %';
+          } else if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
+            return value + ' %';
+          } else if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
+            return value + ' %';
+          } else if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
+            return value + ' %';
+          } else if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
+            return value + ' %';
+          } else {
+            return value;
           }
-
-          if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
-            return value + ' %'
-          }
-
-          if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
-            return value + ' %'
-          }
-
-          if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
-            return value + ' %'
-          }
-
-          if (['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)) {
-            return value + ' %'
-          }
-          return value
         }
       )
     }
