@@ -28,7 +28,6 @@
   </div>
 </template>
 <script>
-import $ from 'jquery';
 import { Marker, MarkerLayer } from '@antv/l7';
 import { Choropleth } from '@antv/l7plot';
 import { parseElement, parseQuery } from '@/lib/utils'
@@ -66,11 +65,6 @@ export default {
         hkm: { color: 'gray', width: 0.7, opacity: 0 },
         // hkm: false
       },
-      currentChoroplethData: { // 当前行政区的数据
-        province: {},
-        city: {},
-        district: {}
-      },
       // 当前行政区的实例
       choropleth: {},
       markerLayer: null,
@@ -105,28 +99,25 @@ export default {
       this.destroyScence()
       this.initLevel = initLevel
       this.dirllStep = dirllMap[initLevel]
-      $.getJSON(url, data => {
-        this.currentChoroplethData[initLevel] = data
-        // 初始化地图
-        this.choropleth = new Choropleth('mapL7', this.getOptions(mapData));
-        this.markerLayer = new MarkerLayer({});
-        this.choropleth.on('loaded', () => {
-          const maps = document.querySelector('.amap-maps')
-          maps && (maps.style.background = 'rgba(0, 0, 0, 0)') // 处理闪白屏问题
-          this.mapLoading = false
-          // 禁止地图滚动缩放
-          this.choropleth.scene?.setMapStatus({
-            doubleClickZoom: false, // 双击放大
-            zoomEnable: false, // 滚动缩放
-            rotateEnable: false // 旋转
-          });
-          // 去掉轮廓线
-          this.choropleth.scene?.map.setFeatures([]);
-          setTimeout(() => {
-            this.setMarker(mapData)
-          }, 1000);
+      // 初始化地图
+      this.choropleth = new Choropleth('mapL7', this.getOptions(mapData));
+      this.markerLayer = new MarkerLayer({});
+      this.choropleth.on('loaded', () => {
+        const maps = document.querySelector('.amap-maps')
+        maps && (maps.style.background = 'rgba(0, 0, 0, 0)') // 处理闪白屏问题
+        this.mapLoading = false
+        // 禁止地图滚动缩放
+        this.choropleth.scene?.setMapStatus({
+          doubleClickZoom: false, // 双击放大
+          zoomEnable: false, // 滚动缩放
+          rotateEnable: false // 旋转
         });
-      })
+        // 去掉轮廓线
+        this.choropleth.scene?.map.setFeatures([]);
+        setTimeout(() => {
+          this.setMarker(mapData)
+        }, 1000);
+      });
     },
     getOptions(data) {
       const _this = this;
@@ -212,11 +203,9 @@ export default {
         this.showRotateIcon = true
         if (!skipProvince.includes(nodes[times]?.name)) {
           times = times < nodes.length ? times : 0;
-          if (this.currentChoroplethData.country.features) {
-            tooltipsData = nodes[times];
-            this.setRotateMarker(nodes[times])
-            this.times = times
-          }
+          tooltipsData = nodes[times];
+          this.setRotateMarker(nodes[times])
+          this.times = times
         }
         ++times;
       }, 5000);
@@ -292,47 +281,47 @@ export default {
             <li class="li">
               <div class="li-left">15日办结率</div>
               <div class="li-right">${(data.data4 * 100).toFixed(2) || '--'}%</div>
-              <div class="li-order">第${data.data5 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data5)}">第${data.data5 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">平均处理期限</div>
               <div class="li-right">${data.data6.toFixed(2) || '--'}天</div>
-              <div class="li-order">第${data.data7 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data7)}">第${data.data7 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每网点投诉</div>
               <div class="li-right">${data.data8.toFixed(2) || '--'} 件</div>
-              <div class="li-order">第${data.data9 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data9)}">第${data.data9 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每百万客户投诉</div>
               <div class="li-right">${data.data10.toFixed(2) || '--'}件</div>
-              <div class="li-order">第${data.data11 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data11)}">第${data.data11 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">每百亿资产投诉</div>
               <div class="li-right">${data.data12.toFixed(2) || '--'}件</div>
-              <div class="li-order">第${data.data13 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data13)}">第${data.data13 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">升级投诉率</div>
               <div class="li-right">${(data.data14 * 100).toFixed(2) || '--'}%</div>
-              <div class="li-order">第${data.data15 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data15)}">第${data.data15 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">反复投诉率</div>
               <div class="li-right">${(data.data16 * 100).toFixed(2) || '--'}%</div>
-              <div class="li-order">第${data.data17 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data17)}">第${data.data17 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">多元方式化解投诉比率</div>
               <div class="li-right">${(data.data18 * 100).toFixed(2) || '--'}%</div>
-              <div class="li-order">第${data.data19 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data19)}">第${data.data19 || '--'}名</div>
             </li>
             <li class="li">
               <div class="li-left">客户满意度</div>
               <div class="li-right">${(data.data20 * 100).toFixed(2) || '--'}%</div>
-              <div class="li-order">第${data.data21 || '--'}名</div>
+              <div class="li-order ${this.getOrderClass(data.data21)}">第${data.data21 || '--'}名</div>
             </li>
           </ul>
         </div>`
@@ -401,6 +390,14 @@ export default {
         }
       }
     },
+    getOrderClass(data) {
+      if (data <= 5) {
+        return 'li-order-green'
+      } else if (data >= mapData.length - 5) {
+        return 'li-order-red'
+      }
+      return ''
+    },
   }
 }
 </script>
@@ -443,7 +440,8 @@ export default {
   /deep/ .amap-maps {
     background: #071531;
   }
-  /deep/ .el-loading-spinner{
+
+  /deep/ .el-loading-spinner {
     top: 35%;
   }
 }
@@ -494,6 +492,7 @@ export default {
       transform: matrix(0.99, 0, -0.15, 1, 0, 0);
     }
   }
+
   &-items {
     display: flex;
     align-items: center;
@@ -507,6 +506,7 @@ export default {
       transform-origin: 0 0;
     }
   }
+
   .move-top {
     position: relative;
     top: 6px;
@@ -623,6 +623,12 @@ export default {
         line-height: 20px;
       }
     }
+  }
+  .li-order-green{
+    color: #52C41A;
+  }
+  .li-order-red{
+    color: #EB5757;
   }
 }
 
