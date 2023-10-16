@@ -41,6 +41,7 @@
 <script>
 import { getCityData } from './city'
 import { getCityValue } from './cityData'
+import { percentages } from './percentages'
 const { dataTopCity, dataDownCity } = getCityData()
 const { dataTop, dataDown } = getCityValue()
 
@@ -91,7 +92,8 @@ export default {
         }
       ],
       dataTopCity,
-      dataDownCity
+      dataDownCity,
+      percentages
     }
   },
   mounted() {
@@ -145,23 +147,10 @@ export default {
      */
     fingureData(target) {
       const max = Math.max(...target)
-      let maxLen = 0
-      // 判断是几位数
       const maxStr = max.toString()
-      // 转换成数组
-      const maxArr = maxStr.split('')
-      if (maxArr.includes('.')) {
-        // 说明是小数,截取.之前的数
-        maxLen = maxStr.split('.')[0].length
-      } else {
-        maxLen = maxStr.length
-      }
-
-      const pushData = (value) => {
-        const newArr = [...target]
-        newArr.unshift(value)
-        return newArr
-      }
+      const maxArr = Array.from(maxStr)
+      const maxLen = maxArr.includes('.') ? maxArr.indexOf('.') : maxArr.length
+      const pushData = (value) => [value, ...target]
 
       // 特殊情况
       if ([0, 2, 3, 7, 8].includes(this.sign)) return pushData(100)
@@ -270,21 +259,7 @@ export default {
         this.fingureData(dataTop[this.sign]),
         '#09CEA9',
         (value) => {
-          if (['99.1', '99.04', '99.01', '98.99', '98.87'].includes(value)) {
-            return value + ' %'
-          } else if (['15.3', '14.2', '13.21', '12.2', '12'].includes(value)) {
-            return value + ' %'
-          } else if (
-            ['11.52', '11.2', '10.9', '10.04', '10.03'].includes(value)
-          ) {
-            return value + ' %'
-          } else if (
-            ['23.5', '22.63', '21.11', '21.01', '19.42'].includes(value)
-          ) {
-            return value + ' %'
-          } else if (
-            ['72.77', '68.87', '63.56', '63.31', '60.18'].includes(value)
-          ) {
+          if (this.percentages[value]) {
             return value + ' %'
           } else {
             return value
@@ -298,17 +273,7 @@ export default {
         this.fingureData(dataDown[this.sign]),
         '#FB3F22',
         (value) => {
-          if (['92.56', '92.21', '91.93', '91.15', '90.18'].includes(value)) {
-            return value + ' %'
-          } else if (['6.8', '6.34', '6.21', '6.04', '5.55'].includes(value)) {
-            return value + ' %'
-          } else if (['3.51', '3.36', '2.53', '2.3', '2.05'].includes(value)) {
-            return value + ' %'
-          } else if (['10.42', '9.85', '9.83', '9.1', '9.01'].includes(value)) {
-            return value + ' %'
-          } else if (
-            ['44.65', '44.45', '41.93', '39.01', '38.81'].includes(value)
-          ) {
+          if (this.percentages[value]) {
             return value + ' %'
           } else {
             return value
